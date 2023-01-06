@@ -1,8 +1,9 @@
-import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
 
-import dotenv from 'dotenv';
+import RouteV1 from './routes/v1';
 
 dotenv.config();
 
@@ -18,8 +19,6 @@ app.use(
 );
 app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to NEWS API');
-});
+app.use('/api/v1', RouteV1);
 
 export default app;
