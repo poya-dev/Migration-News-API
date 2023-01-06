@@ -3,9 +3,9 @@ import { Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 
-import ApiResponse from '../../../../../utils/api-response';
-import UserRepo from '../../../../repositories/UserRepo';
-import IUser from '../../../../../types/user.type';
+import ApiResponse from '../../../../utils/api-response';
+import UserRepo from '../../../../database/repositories/UserRepo';
+import IUser from '../../../../types/user.type';
 
 const router = express.Router();
 
