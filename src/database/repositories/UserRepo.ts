@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import UserModel from '../models/User.model';
 import IUser from '../../types/user.type';
 
+const USER_DETAILS = '+_id +name +email +role +userPictureUrl +isVerified';
+
 export default class UserRepo {
   public static async create(user: IUser): Promise<IUser> {
     const newRec = await UserModel.create(user);
@@ -10,15 +12,18 @@ export default class UserRepo {
   }
 
   public static async fetchAll(): Promise<IUser[]> {
-    return UserModel.find().lean<IUser[]>().exec();
+    return UserModel.find().select(USER_DETAILS).lean<IUser[]>().exec();
   }
 
   public static async findById(id: Types.ObjectId): Promise<IUser | null> {
-    return UserModel.findById(id).lean<IUser>().exec();
+    return UserModel.findById(id).select(USER_DETAILS).lean<IUser>().exec();
   }
 
   public static async findByEmail(email: string): Promise<IUser | null> {
-    return UserModel.findOne({ email: email }).lean<IUser>().exec();
+    return UserModel.findOne({ email: email })
+      .select(USER_DETAILS)
+      .lean<IUser>()
+      .exec();
   }
 
   public static async update(user: IUser): Promise<any> {
