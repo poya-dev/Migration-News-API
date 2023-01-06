@@ -1,12 +1,12 @@
 {
   "name": "news-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start:dev": "npx nodemon",
     "build": "rimraf ./build && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && node build/index.js"
+    "start": "npm run build && node build/server.js"
   },
   "keywords": [],
   "author": "",
