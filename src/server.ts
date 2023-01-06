@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 import app from './app';
 
-(async function () {
+(async () => {
   mongoose.set({ strictQuery: true });
   mongoose
     .connect('mongodb://127.0.0.1:27017/news-app-db')
