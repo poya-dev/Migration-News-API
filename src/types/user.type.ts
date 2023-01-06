@@ -9,7 +9,7 @@ export default interface IUser {
   password: string;
   role?: string;
   authProvider?: IAuthProvider;
-  profilePictureUrl?: string;
+  userPictureUrl?: string;
   isVerified?: boolean;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;

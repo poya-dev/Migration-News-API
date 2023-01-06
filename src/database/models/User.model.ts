@@ -27,7 +27,7 @@ export const schema = new Schema<IUser>(
       },
       select: false,
     },
-    profilePictureUrl: {
+    userPictureUrl: {
       type: String,
     },
     isVerified: {
