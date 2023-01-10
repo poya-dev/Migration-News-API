@@ -1,0 +1,43 @@
+import mongoose, { Schema } from 'mongoose';
+
+import News from '../../types/news.type';
+
+export const schema = new Schema<News>(
+  {
+    title: {
+      type: String,
+      require: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['Draft', 'Submitted', 'Published'],
+      default: 'Draft',
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'NewsCategory',
+      required: true,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    updatedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model<News>('News', schema);
