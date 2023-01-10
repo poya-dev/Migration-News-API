@@ -11,7 +11,7 @@ export default class UserRepo {
     return newRec.toObject();
   }
 
-  public static async fetchAll(): Promise<IUser[]> {
+  public static async findAll(): Promise<IUser[]> {
     return UserModel.find().select(USER_DETAILS).lean<IUser[]>().exec();
   }
 

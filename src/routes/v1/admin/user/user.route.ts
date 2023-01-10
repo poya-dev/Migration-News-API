@@ -29,7 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 router.get('/', async (req: Request, res: Response) => {
-  const recs = await UserRepo.fetchAll();
+  const recs = await UserRepo.findAll();
   return ApiResponse.successResponse(res, 200, recs);
 });
 
