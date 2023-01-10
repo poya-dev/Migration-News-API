@@ -22,7 +22,7 @@ export default class NewsCategoryRepo {
   }
 
   public static async findByName(name: string): Promise<NewsCategory | null> {
-    return NewsCategoryModel.find({ name: name })
+    return NewsCategoryModel.findOne({ name: name })
       .lean<NewsCategory | null>()
       .exec();
   }
