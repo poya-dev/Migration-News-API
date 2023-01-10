@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-import app from './app';
 import { db, port } from './config';
+import app from './app';
 
 (async () => {
   mongoose.set({ strictQuery: true });
