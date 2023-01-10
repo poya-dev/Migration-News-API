@@ -1,4 +1,4 @@
-export default interface IAuthProvider {
+export default interface AuthProvider {
   id: string;
   name: string;
   token: string;

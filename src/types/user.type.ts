@@ -1,14 +1,14 @@
 import { Types } from 'mongoose';
 
-import IAuthProvider from './authProvider.type';
+import AuthProvider from './authProvider.type';
 
-export default interface IUser {
+export default interface User {
   _id?: Types.ObjectId;
   name: string;
   email: string;
   password: string;
   role?: string;
-  authProvider?: IAuthProvider;
+  authProvider?: AuthProvider;
   userPictureUrl?: string;
   isVerified?: boolean;
   resetPasswordToken?: string;
