@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import ApiResponse from '../../../../utils/api-response';
 import UserRepo from '../../../../database/repositories/UserRepo';
-import IUser from '../../../../types/user.type';
+import User from '../../../../types/user.type';
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.post('/', async (req: Request, res: Response) => {
     email: req.body.email,
     password: hashedPassword,
     userPictureUrl: req.body.userPictureUrl,
-  } as IUser);
+  } as User);
   return ApiResponse.successResponse(
     res,
     201,
