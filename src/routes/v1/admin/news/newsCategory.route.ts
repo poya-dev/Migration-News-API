@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
-import _ from 'lodash';
 
 import NewsCategoryRepo from '../../../../database/repositories/NewsCategoryRepo';
 import NewsCategory from '../../../../types/newsCategory.type';
