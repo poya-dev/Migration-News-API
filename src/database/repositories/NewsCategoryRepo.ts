@@ -15,8 +15,16 @@ export default class NewsCategoryRepo {
     return NewsCategoryModel.find().lean<NewsCategory[]>().exec();
   }
 
-  public static async findById(): Promise<NewsCategory | null> {
-    return NewsCategoryModel.find().lean<NewsCategory | null>().exec();
+  public static async findById(
+    id: Types.ObjectId
+  ): Promise<NewsCategory | null> {
+    return NewsCategoryModel.findById(id).lean<NewsCategory | null>().exec();
+  }
+
+  public static async findByName(name: string): Promise<NewsCategory | null> {
+    return NewsCategoryModel.find({ name: name })
+      .lean<NewsCategory | null>()
+      .exec();
   }
 
   public static async update(newsCategory: NewsCategory): Promise<any> {
