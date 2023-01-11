@@ -13,4 +13,8 @@ export const db = {
   password: process.env.DB_PASSWORD || '',
 };
 
+export const accessTokenPrivateKey = process.env.ACCESS_TOKEN_PRIVATE_KEY || '';
+export const accessTokenPublicKey = process.env.ACCESS_TOKEN_PUBLIC_KEY || '';
+export const accessTokenExpiresIn = process.env.JWT_EXPIRES_IN || '';
+
 export const corsUrl = process.env.CORS_URL;
