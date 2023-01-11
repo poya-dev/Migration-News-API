@@ -16,11 +16,13 @@ export const schema = new Schema<Channel>(
       type: Types.ObjectId,
       ref: 'User',
       required: true,
+      select: false,
     },
     updatedBy: {
       type: Types.ObjectId,
       ref: 'User',
       required: true,
+      select: false,
     },
   },
   { timestamps: true }

@@ -30,11 +30,13 @@ export const schema = new Schema<News>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      select: false,
     },
     updatedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      select: false,
     },
   },
   { timestamps: true }
