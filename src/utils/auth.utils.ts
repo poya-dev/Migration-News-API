@@ -12,7 +12,7 @@ export const signJwt = (payload: Object, options: SignOptions = {}) => {
   });
 };
 
-export const verifyJwt = (token: string) => {
+export const verifyJwt = (token: string): any => {
   // const publicKey = Buffer.from(accessTokenPublicKey, 'base64').toString(
   //   'ascii'
   // );
