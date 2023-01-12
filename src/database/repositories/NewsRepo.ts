@@ -10,15 +10,57 @@ export default class NewsRepo {
   }
 
   public static async findAll(): Promise<News[]> {
-    return NewsModel.find().lean<News[]>().exec();
+    return NewsModel.find()
+      .populate({
+        path: 'category',
+        select: '_id name',
+      })
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<News[]>()
+      .exec();
   }
 
   public static async findById(id: Types.ObjectId): Promise<News | null> {
-    return NewsModel.findById(id).lean<News | null>().exec();
+    return NewsModel.findById(id)
+      .populate({
+        path: 'category',
+        select: '_id name',
+      })
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<News | null>()
+      .exec();
   }
 
   public static async findByTitle(title: string): Promise<News | null> {
-    return NewsModel.findOne({ title: title }).lean<News | null>().exec();
+    return NewsModel.findOne({ title: title })
+      .populate({
+        path: 'category',
+        select: '_id name',
+      })
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<News | null>()
+      .exec();
   }
 
   public static async update(news: News): Promise<any> {
