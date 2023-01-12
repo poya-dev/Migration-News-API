@@ -12,17 +12,45 @@ export default class NewsCategoryRepo {
   }
 
   public static async findAll(): Promise<NewsCategory[]> {
-    return NewsCategoryModel.find().lean<NewsCategory[]>().exec();
+    return NewsCategoryModel.find()
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<NewsCategory[]>()
+      .exec();
   }
 
   public static async findById(
     id: Types.ObjectId
   ): Promise<NewsCategory | null> {
-    return NewsCategoryModel.findById(id).lean<NewsCategory | null>().exec();
+    return NewsCategoryModel.findById(id)
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<NewsCategory | null>()
+      .exec();
   }
 
   public static async findByName(name: string): Promise<NewsCategory | null> {
     return NewsCategoryModel.findOne({ name: name })
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
       .lean<NewsCategory | null>()
       .exec();
   }
