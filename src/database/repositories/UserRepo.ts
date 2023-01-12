@@ -16,14 +16,11 @@ export default class UserRepo {
   }
 
   public static async findById(id: Types.ObjectId): Promise<IUser | null> {
-    return UserModel.findById(id).select(USER_DETAILS).lean<IUser>().exec();
+    return UserModel.findById(id).lean<IUser>().exec();
   }
 
   public static async findByEmail(email: string): Promise<IUser | null> {
-    return UserModel.findOne({ email: email })
-      .select(USER_DETAILS)
-      .lean<IUser>()
-      .exec();
+    return UserModel.findOne({ email: email }).lean<IUser>().exec();
   }
 
   public static async update(user: IUser): Promise<any> {
