@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import UserModel from '../models/User.model';
 import IUser from '../../types/user.type';
 
-const USER_DETAILS = '+_id +name +email +role +userPictureUrl +isVerified';
+const USER_DETAILS = '_id name email role userPictureUrl isVerified';
 
 export default class UserRepo {
   public static async create(user: IUser): Promise<IUser> {
