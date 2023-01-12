@@ -38,7 +38,11 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   const rec = await UserRepo.findById(new Types.ObjectId(id));
   if (!rec)
     return ApiResponse.failureResponse(res, 404, 'Record does not exist.');
-  return ApiResponse.successResponse(res, 200, rec);
+  return ApiResponse.successResponse(
+    res,
+    200,
+    _.pick(rec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl'])
+  );
 });
 
 router.get('/email/:email', async (req: Request, res: Response) => {
@@ -46,7 +50,11 @@ router.get('/email/:email', async (req: Request, res: Response) => {
   const rec = await UserRepo.findByEmail(email);
   if (!rec)
     return ApiResponse.failureResponse(res, 404, 'User does not exist.');
-  ApiResponse.successResponse(res, 200, rec);
+  ApiResponse.successResponse(
+    res,
+    200,
+    _.pick(rec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl'])
+  );
 });
 
 router.put('/id/:id', async (req: Request, res: Response) => {
