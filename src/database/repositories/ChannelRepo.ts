@@ -10,15 +10,45 @@ export default class ChannelRepo {
   }
 
   public static async findAll(): Promise<Channel[]> {
-    return ChannelModel.find().lean<Channel[]>().exec();
+    return ChannelModel.find()
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<Channel[]>()
+      .exec();
   }
 
   public static async findById(id: Types.ObjectId): Promise<Channel | null> {
-    return ChannelModel.findById(id).lean<Channel | null>().exec();
+    return ChannelModel.findById(id)
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<Channel | null>()
+      .exec();
   }
 
   public static async findByName(name: string): Promise<Channel | null> {
-    return ChannelModel.findOne({ name: name }).lean<Channel | null>().exec();
+    return ChannelModel.findOne({ name: name })
+      .populate({
+        path: 'createdBy',
+        select: '_id name email',
+      })
+      .populate({
+        path: 'updatedBy',
+        select: '_id name email',
+      })
+      .lean<Channel | null>()
+      .exec();
   }
 
   public static async update(channel: Channel): Promise<any> {
