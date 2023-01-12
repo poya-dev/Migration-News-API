@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import NewsRepo from '../../../../database/repositories/NewsRepo';
 import ApiResponse from '../../../../utils/api-response';
 import News from '../../../../types/news.type';
+import User from '../../../../types/user.type';
 
 const router = express.Router();
 
@@ -16,8 +17,8 @@ router.post('/', async (req: Request, res: Response) => {
     content: req.body.content,
     imageUrl: req.body.imageUrl,
     category: req.body.category,
-    createdBy: req.body.user,
-    updatedBy: req.body.user,
+    createdBy: (req.user as User)._id,
+    updatedBy: (req.user as User)._id,
   } as News);
   return ApiResponse.successResponse(
     res,
@@ -57,7 +58,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (req.body.content) rec.content = req.body.content;
   if (req.body.imageUrl) rec.imageUrl = req.body.imageUrl;
   if (req.body.category) rec.category = req.body.category;
-  if (req.body.user) rec.updatedBy = req.body.user;
+  rec.updatedBy = (req.user as User)._id;
   const updateRec = await NewsRepo.update(rec);
   return ApiResponse.successResponse(
     res,

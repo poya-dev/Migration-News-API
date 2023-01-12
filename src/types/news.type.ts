@@ -9,9 +9,9 @@ export default interface News {
   content: string;
   imageUrl: string;
   status?: string;
-  category: NewsCategory;
-  createdBy?: User;
-  updatedBy?: User;
+  category: NewsCategory['_id'];
+  createdBy?: User['_id'];
+  updatedBy?: User['_id'];
   createdAt?: Date;
   updatedAt?: Date;
 }
