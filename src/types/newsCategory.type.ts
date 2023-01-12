@@ -6,8 +6,8 @@ export default interface NewsCategory {
   _id: Types.ObjectId;
   name: string;
   status?: string;
-  createdBy?: User;
-  updatedBy?: User;
+  createdBy?: User['_id'];
+  updatedBy?: User['_id'];
   createdAt?: Date;
   updatedAt: Date;
 }
