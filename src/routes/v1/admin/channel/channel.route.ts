@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import ChannelRepo from '../../../../database/repositories/ChannelRepo';
 import ApiResponse from '../../../../utils/api-response';
 import Channel from '../../../../types/channel.type';
+import User from '../../../../types/user.type';
 
 const router = express.Router();
 
@@ -14,8 +15,8 @@ router.post('/', async (req: Request, res: Response) => {
   const newRec = await ChannelRepo.create({
     name: req.body.name,
     iconUrl: req.body.iconUrl,
-    createdBy: req.body.user,
-    updatedBy: req.body.user,
+    createdBy: (req.user as User)._id,
+    updatedBy: (req.user as User)._id,
   } as Channel);
   return ApiResponse.successResponse(
     res,
@@ -54,6 +55,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (req.body.name) rec.name = req.body.name;
   if (req.body.iconUrl) rec.iconUrl = req.body.iconUrl;
   if (req.body.user) rec.updatedBy = req.body.user;
+  rec.updatedBy = (req.user as User)._id;
   const updateRec = await ChannelRepo.update(rec);
   return ApiResponse.successResponse(
     res,
