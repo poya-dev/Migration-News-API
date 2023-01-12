@@ -5,12 +5,12 @@ export default class ApiResponse {
     res: Response,
     code: number,
     token: string,
-    message = 'successfully'
+    successMessage = 'successfully'
   ) {
     return res.status(code).json({
       status: 'success',
       accessToken: token,
-      message,
+      successMessage: successMessage,
     });
   }
 
@@ -18,11 +18,11 @@ export default class ApiResponse {
     res: Response,
     code: number,
     data: any,
-    message = 'successfully'
+    successMessage = 'successfully'
   ) {
     return res
       .status(code)
-      .json({ status: 'success', data: data, message: message });
+      .json({ status: 'success', data: data, successMessage: successMessage });
   }
 
   public static failureResponse(
