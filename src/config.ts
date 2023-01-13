@@ -18,4 +18,10 @@ export const accessTokenPrivateKey = process.env.ACCESS_TOKEN_PRIVATE_KEY || '';
 export const accessTokenPublicKey = process.env.ACCESS_TOKEN_PUBLIC_KEY || '';
 export const accessTokenExpiresIn = process.env.ACCESS_TOKEN_EXPIRES_IN || '';
 
+export const facebookClientId = process.env.FACEBOOK_CLIENT_ID || '';
+export const facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || '';
+
+export const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
+export const googleSecretId = process.env.GOOGLE_SECRET_ID || '';
+
 export const corsUrl = process.env.CORS_URL;
