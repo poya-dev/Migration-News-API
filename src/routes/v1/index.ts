@@ -1,8 +1,8 @@
 import express from 'express';
 
 import requiredLogin from '../../middlewares/requiredLogin';
-import authRoute from './auth';
 import adminRoute from './admin';
+import authRoute from './auth';
 
 const router = express.Router();
 
