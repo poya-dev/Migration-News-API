@@ -10,9 +10,8 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
   const { authorization } = req.headers;
-  console.log('::authorization:: ->', authorization);
   if (!authorization || !authorization.startsWith('Bearer'))
-    return ApiResponse.failureResponse(res, 401, 'Token not provided');
+    return ApiResponse.failureResponse(res, 401, 'Google ID token is required');
   const token = authorization.split(' ')[1];
   try {
     const profile = await verifyGoogleIdToken(token);
@@ -20,7 +19,7 @@ router.get('/', async (req: Request, res: Response) => {
       return ApiResponse.failureResponse(
         res,
         401,
-        'Google ID token invalid or expired'
+        'Google ID token is invalid or expired'
       );
     let user = await UserRepo.findOrCreate(profile, 'Google', token);
     const payload = {
