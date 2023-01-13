@@ -4,6 +4,8 @@ import express from 'express';
 import cors from 'cors';
 
 import './services/facebookPassport.service';
+
+// NEWS API V1 route
 import RouteV1 from './routes/v1';
 
 const app = express();
