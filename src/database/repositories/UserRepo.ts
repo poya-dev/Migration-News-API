@@ -13,21 +13,26 @@ export default class UserRepo {
 
   public static async findOrCreate(
     profile: any,
+    provider: string,
     accessToken: string
   ): Promise<User> {
-    const rec = await UserModel.findOne({ 'authProvider.id': profile.id });
+    const isGoogle = provider === 'Google';
+    const rec = await UserModel.findOne({
+      'authProvider.id': isGoogle ? profile.sub : profile.id,
+    });
     if (!rec) {
-      const newRec = await UserModel.create({
-        name: profile.displayName,
-        email: profile.emails[0].value ?? '',
+      const user = {
+        name: isGoogle ? profile.name : profile.displayName,
+        email: isGoogle ? profile.email : profile.emails[0].value || '',
         authProvider: {
-          id: profile.id,
-          name: profile.provider,
+          id: isGoogle ? profile.sub : profile.id,
+          name: isGoogle ? 'Google' : 'Facebook',
           token: accessToken,
         },
         isVerified: true,
-        imageProfile: profile.photos[0].value,
-      });
+        userPictureUrl: isGoogle ? profile.picture : profile.photos[0].value,
+      };
+      const newRec = await UserModel.create(user);
       return newRec.toObject();
     }
     return rec.toObject();
