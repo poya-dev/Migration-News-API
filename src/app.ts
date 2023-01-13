@@ -1,11 +1,14 @@
 import bodyParser from 'body-parser';
+import passport from 'passport';
 import express from 'express';
 import cors from 'cors';
 
+import './services/facebookPassport.service';
 import RouteV1 from './routes/v1';
 
 const app = express();
 
+app.use(passport.initialize());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(
   bodyParser.urlencoded({
