@@ -1,7 +1,10 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 
-import { testSecretKey } from '../config'; // will be removed
+import { testSecretKey, googleClientId } from '../config'; // will be removed
 // import { accessTokenPrivateKey, accessTokenPublicKey } from '../config';
+
+const client = new OAuth2Client(googleClientId);
 
 export const signJwt = (payload: Object, options: SignOptions = {}) => {
   // const privateKey = Buffer.from(accessTokenPrivateKey, 'base64').toString(
@@ -17,4 +20,13 @@ export const verifyJwt = (token: string): any => {
   //   'ascii'
   // );
   return jwt.verify(token, testSecretKey);
+};
+
+export const verifyGoogleIdToken = async (token: string) => {
+  try {
+    const ticket = await client.verifyIdToken({ idToken: token });
+    return ticket.getPayload();
+  } catch (error: any) {
+    throw new Error('Google ID token is invalid');
+  }
 };
