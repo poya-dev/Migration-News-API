@@ -45,6 +45,22 @@ export default class NewsRepo {
       .exec();
   }
 
+  public static async findAndUpdateViewCount(
+    id: Types.ObjectId
+  ): Promise<News | null> {
+    return NewsModel.findByIdAndUpdate(
+      id,
+      { $inc: { view_count: 1 } },
+      { new: true }
+    )
+      .populate({
+        path: 'category',
+        select: '_id name',
+      })
+      .lean<News>()
+      .exec();
+  }
+
   public static async findByTitle(title: string): Promise<News | null> {
     return NewsModel.findOne({ title: title })
       .populate({
