@@ -11,6 +11,7 @@ export default interface User {
   authProvider?: AuthProvider;
   userPictureUrl?: string;
   isVerified?: boolean;
+  lastActive?: Date;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   createdAt?: Date;
