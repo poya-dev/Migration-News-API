@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', async (req: Request, res: Response) => {
   const rec = await ChannelRepo.findByName(req.body.name);
   if (rec)
-    return ApiResponse.failureResponse(res, 401, 'Record already exists.');
+    return ApiResponse.failureResponse(res, 401, 'Record already exists');
   const newRec = await ChannelRepo.create({
     name: req.body.name,
     iconUrl: req.body.iconUrl,
@@ -32,19 +32,19 @@ router.get('/', async (req: Request, res: Response) => {
     res,
     200,
     recs,
-    'Records fetched successfully.'
+    'Records fetched successfully'
   );
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await ChannelRepo.findById(new Types.ObjectId(id));
-  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
+  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
   return ApiResponse.successResponse(
     res,
     200,
     rec,
-    'Record fetched successfully.'
+    'Record fetched successfully'
   );
 });
 
@@ -54,7 +54,6 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
   if (req.body.name) rec.name = req.body.name;
   if (req.body.iconUrl) rec.iconUrl = req.body.iconUrl;
-  if (req.body.user) rec.updatedBy = req.body.user;
   rec.updatedBy = (req.user as User)._id;
   const updateRec = await ChannelRepo.update(rec);
   return ApiResponse.successResponse(
