@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', async (req: Request, res: Response) => {
   const rec = await NewsCategoryRepo.findByName(req.body.name);
   if (rec)
-    return ApiResponse.failureResponse(res, 401, 'Record already exists.');
+    return ApiResponse.failureResponse(res, 401, 'Record already exists');
   const newRec = await NewsCategoryRepo.create({
     name: req.body.name,
     createdBy: (req.user as User)._id,
@@ -21,7 +21,7 @@ router.post('/', async (req: Request, res: Response) => {
     res,
     201,
     newRec,
-    'Record created successfully.'
+    'Record created successfully'
   );
 });
 
@@ -31,7 +31,7 @@ router.get('/', async (req: Request, res: Response) => {
     res,
     200,
     recs,
-    'Records fetched successfully.'
+    'Records fetched successfully'
   );
 });
 
@@ -43,7 +43,7 @@ router.get('/id/:id', async (req: Request, res: Response) => {
     res,
     200,
     rec,
-    'Record fetched successfully.'
+    'Record fetched successfully'
   );
 });
 
@@ -71,7 +71,7 @@ router.delete('/id/:id', async (req: Request, res: Response) => {
     res,
     200,
     deleteRec,
-    'Record deleted successfully.'
+    'Record deleted successfully'
   );
 });
 
