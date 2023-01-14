@@ -24,6 +24,11 @@ export const schema = new Schema<News>(
     view_count: {
       type: Schema.Types.Number,
     },
+    channel: {
+      type: Schema.Types.ObjectId,
+      ref: 'Channel',
+      required: true,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: 'NewsCategory',

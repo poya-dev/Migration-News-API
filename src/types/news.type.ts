@@ -1,7 +1,8 @@
 import { Types } from 'mongoose';
 
-import User from './user.type';
 import NewsCategory from './newsCategory.type';
+import Channel from './channel.type';
+import User from './user.type';
 
 export default interface News {
   _id?: Types.ObjectId;
@@ -10,6 +11,7 @@ export default interface News {
   imageUrl: string;
   status?: string;
   view_count: number;
+  channel: Channel['_id'];
   category: NewsCategory['_id'];
   createdBy?: User['_id'];
   updatedBy?: User['_id'];
