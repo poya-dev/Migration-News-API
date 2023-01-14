@@ -9,6 +9,7 @@ export default interface News {
   content: string;
   imageUrl: string;
   status?: string;
+  view_count: number;
   category: NewsCategory['_id'];
   createdBy?: User['_id'];
   updatedBy?: User['_id'];

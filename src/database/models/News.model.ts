@@ -21,6 +21,9 @@ export const schema = new Schema<News>(
       enum: ['Draft', 'Submitted', 'Published'],
       default: 'Draft',
     },
+    view_count: {
+      type: Schema.Types.Number,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: 'NewsCategory',
