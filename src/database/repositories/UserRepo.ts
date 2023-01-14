@@ -58,6 +58,13 @@ export default class UserRepo {
       .exec();
   }
 
+  public static async updateLastSeen(id: Types.ObjectId): Promise<any> {
+    const now = new Date();
+    return UserModel.updateOne({ _id: id }, { $set: { lastActive: now } })
+      .lean<User>()
+      .exec();
+  }
+
   public static async remove(id: Types.ObjectId): Promise<User | null> {
     return UserModel.findByIdAndRemove(id).lean<User>().exec();
   }
