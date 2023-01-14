@@ -7,7 +7,7 @@ import ApiResponse from '../../../../utils/api-response';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const recs = NewsCategoryRepo.findAll();
+  const recs = await NewsCategoryRepo.findAll();
   return ApiResponse.successResponse(
     res,
     200,
