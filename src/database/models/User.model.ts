@@ -23,7 +23,6 @@ export const schema = new Schema<User>(
       type: {
         id: String,
         name: String,
-        token: String,
       },
       select: false,
     },

@@ -21,7 +21,7 @@ router.get('/', async (req: Request, res: Response) => {
         401,
         'Google ID token is invalid or expired'
       );
-    let user = await UserRepo.findOrCreate(profile, 'Google', token);
+    let user = await UserRepo.findOrCreate(profile, 'Google');
     const payload = {
       _id: user._id,
       name: user.name,

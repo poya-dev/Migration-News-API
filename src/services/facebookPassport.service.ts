@@ -17,11 +17,7 @@ passport.use(
       profile: any,
       done: any
     ) => {
-      const user = await UserRepo.findOrCreate(
-        profile,
-        'Facebook',
-        accessToken
-      );
+      const user = await UserRepo.findOrCreate(profile, 'Facebook');
       return done(null, user);
     }
   )

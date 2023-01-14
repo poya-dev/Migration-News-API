@@ -13,8 +13,7 @@ export default class UserRepo {
 
   public static async findOrCreate(
     profile: any,
-    provider: string,
-    accessToken: string
+    provider: string
   ): Promise<User> {
     const isGoogle = provider === 'Google';
     const rec = await UserModel.findOne({
@@ -27,7 +26,6 @@ export default class UserRepo {
         authProvider: {
           id: isGoogle ? profile.sub : profile.id,
           name: isGoogle ? 'Google' : 'Facebook',
-          token: accessToken,
         },
         isVerified: true,
         userPictureUrl: isGoogle ? profile.picture : profile.photos[0].value,
