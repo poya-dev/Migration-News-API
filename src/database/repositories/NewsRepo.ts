@@ -16,6 +16,10 @@ export default class NewsRepo {
         select: '_id name',
       })
       .populate({
+        path: 'channel',
+        select: '_id name iconUrl',
+      })
+      .populate({
         path: 'createdBy',
         select: '_id name email',
       })
@@ -32,6 +36,10 @@ export default class NewsRepo {
       .populate({
         path: 'category',
         select: '_id name',
+      })
+      .populate({
+        path: 'channel',
+        select: '_id name iconUrl',
       })
       .populate({
         path: 'createdBy',
@@ -57,6 +65,10 @@ export default class NewsRepo {
         path: 'category',
         select: '_id name',
       })
+      .populate({
+        path: 'channel',
+        select: '_id name iconUrl',
+      })
       .lean<News>()
       .exec();
   }
@@ -66,6 +78,10 @@ export default class NewsRepo {
       .populate({
         path: 'category',
         select: '_id name',
+      })
+      .populate({
+        path: 'channel',
+        select: '_id name iconUrl',
       })
       .populate({
         path: 'createdBy',
