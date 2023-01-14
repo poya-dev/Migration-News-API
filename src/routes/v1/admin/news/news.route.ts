@@ -17,6 +17,7 @@ router.post('/', async (req: Request, res: Response) => {
     content: req.body.content,
     imageUrl: req.body.imageUrl,
     category: req.body.category,
+    channel: req.body.channel,
     createdBy: (req.user as User)._id,
     updatedBy: (req.user as User)._id,
   } as News);
@@ -58,6 +59,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (req.body.content) rec.content = req.body.content;
   if (req.body.imageUrl) rec.imageUrl = req.body.imageUrl;
   if (req.body.category) rec.category = req.body.category;
+  if (req.body.channel) rec.channel = req.body.channel;
   rec.updatedBy = (req.user as User)._id;
   const updateRec = await NewsRepo.update(rec);
   return ApiResponse.successResponse(
