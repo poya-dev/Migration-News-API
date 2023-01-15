@@ -14,6 +14,7 @@ router.post('/', async (req: Request, res: Response) => {
     return ApiResponse.failureResponse(res, 401, 'Record already exists');
   const newRec = await NewsCategoryRepo.create({
     name: req.body.name,
+    language: req.body.language,
     createdBy: (req.user as User)._id,
     updatedBy: (req.user as User)._id,
   } as NewsCategory);
@@ -52,6 +53,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   const rec = await NewsCategoryRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
   if (req.body.name) rec.name = req.body.name;
+  if (req.body.language) rec.language = req.body.language;
   rec.updatedBy = (req.user as User)._id;
   const updateRec = await NewsCategoryRepo.update(rec);
   return ApiResponse.successResponse(

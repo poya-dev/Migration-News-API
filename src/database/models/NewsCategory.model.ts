@@ -13,6 +13,11 @@ export const schema = new Schema<NewsCategory>(
       enum: ['Draft', 'Submitted', 'Published'],
       default: 'Draft',
     },
+    language: {
+      type: Schema.Types.ObjectId,
+      ref: 'Language',
+      required: true,
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
