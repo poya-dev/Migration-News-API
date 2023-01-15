@@ -16,6 +16,7 @@ router.post('/', async (req: Request, res: Response) => {
     title: req.body.title,
     content: req.body.content,
     imageUrl: req.body.imageUrl,
+    language: req.body.language,
     category: req.body.category,
     channel: req.body.channel,
     createdBy: (req.user as User)._id,
@@ -58,6 +59,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (req.body.title) rec.title = req.body.title;
   if (req.body.content) rec.content = req.body.content;
   if (req.body.imageUrl) rec.imageUrl = req.body.imageUrl;
+  if (req.body.language) rec.language = req.body.language;
   if (req.body.category) rec.category = req.body.category;
   if (req.body.channel) rec.channel = req.body.channel;
   rec.updatedBy = (req.user as User)._id;
