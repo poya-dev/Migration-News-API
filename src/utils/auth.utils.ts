@@ -1,10 +1,10 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 
-import { testSecretKey, googleClientId } from '../config'; // will be removed
+import { testSecretKey, googleClientId, googleSecretId } from '../config'; // will be removed
 // import { accessTokenPrivateKey, accessTokenPublicKey } from '../config'; // later this will be used
 
-const client = new OAuth2Client(googleClientId);
+const client = new OAuth2Client(googleClientId, googleSecretId);
 
 export const signJwt = (payload: Object, options: SignOptions = {}) => {
   // const privateKey = Buffer.from(accessTokenPrivateKey, 'base64').toString(
