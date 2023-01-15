@@ -8,7 +8,11 @@ export const schema = new Schema<Language>(
       type: String,
       required: true,
     },
-    iconUrl: {
+    code: {
+      type: String,
+      required: true,
+    },
+    flagUrl: {
       type: String,
       required: true,
     },

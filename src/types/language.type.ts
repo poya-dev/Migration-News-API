@@ -5,7 +5,8 @@ import User from './user.type';
 export default interface Language {
   _id?: Types.ObjectId;
   name: string;
-  iconUrl: string;
+  code: string;
+  flagUrl: string;
   status: string;
   createdBy?: User['_id'];
   updatedBy?: User['_id'];
