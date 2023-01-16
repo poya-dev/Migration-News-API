@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 
 import NewsCategoryModel from '../models/NewsCategory.model';
 import NewsCategory from '../../types/newsCategory.type';
+import LanguageModel from '../models/Language.model';
 
 export default class NewsCategoryRepo {
   public static async create(
@@ -21,6 +22,14 @@ export default class NewsCategoryRepo {
         path: 'updatedBy',
         select: '_id name email',
       })
+      .lean<NewsCategory[]>()
+      .exec();
+  }
+
+  public static async findByLangCode(code: string): Promise<NewsCategory[]> {
+    const language: any = await LanguageModel.findOne({ code: code });
+    return NewsCategoryModel.find({ language: language._id })
+      .select('_id name')
       .lean<NewsCategory[]>()
       .exec();
   }
