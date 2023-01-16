@@ -31,6 +31,20 @@ export default class NewsRepo {
       .exec();
   }
 
+  public static async findNewsByLangId(id: Types.ObjectId): Promise<News[]> {
+    return NewsModel.find({ language: id })
+      .populate({
+        path: 'category',
+        select: '_id name',
+      })
+      .populate({
+        path: 'channel',
+        select: '_id name iconUrl',
+      })
+      .lean<News[]>()
+      .exec();
+  }
+
   public static async findById(id: Types.ObjectId): Promise<News | null> {
     return NewsModel.findById(id)
       .populate({
