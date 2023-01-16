@@ -51,6 +51,10 @@ export default class LanguageRepo {
       .exec();
   }
 
+  public static async findByCode(code: string): Promise<Language | null> {
+    return LanguageModel.findOne({ code: code }).lean<Language | null>().exec();
+  }
+
   public static async update(language: Language): Promise<any> {
     const now = new Date();
     language.updatedAt = now;
