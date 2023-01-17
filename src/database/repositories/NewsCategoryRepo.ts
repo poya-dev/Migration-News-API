@@ -25,10 +25,10 @@ export default class NewsCategoryRepo {
       .exec();
   }
 
-  public static async findByLangId(
+  public static async findByLanguageId(
     id: Types.ObjectId
   ): Promise<NewsCategory[]> {
-    return NewsCategoryModel.find({ language: id })
+    return NewsCategoryModel.find({ language: id, active: true })
       .select('_id name')
       .lean<NewsCategory[]>()
       .exec();
