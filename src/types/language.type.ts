@@ -6,8 +6,7 @@ export default interface Language {
   _id?: Types.ObjectId;
   name: string;
   code: string;
-  flagUrl: string;
-  status: string;
+  active: boolean;
   createdBy?: User['_id'];
   updatedBy?: User['_id'];
   createdAt?: Date;

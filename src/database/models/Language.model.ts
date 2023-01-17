@@ -12,14 +12,9 @@ export const schema = new Schema<Language>(
       type: String,
       required: true,
     },
-    flagUrl: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ['Draft', 'Submitted', 'Published'],
-      default: 'Draft',
+    active: {
+      type: Boolean,
+      default: false,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
