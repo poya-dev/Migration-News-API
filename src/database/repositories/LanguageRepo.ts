@@ -55,6 +55,18 @@ export default class LanguageRepo {
     return LanguageModel.findOne({ code: code }).lean<Language | null>().exec();
   }
 
+  public static async activate(id: Types.ObjectId): Promise<Language> {
+    return LanguageModel.findByIdAndUpdate(id, { $set: { active: true } })
+      .lean<Language>()
+      .exec();
+  }
+
+  public static async deactivate(id: Types.ObjectId): Promise<Language> {
+    return LanguageModel.findByIdAndUpdate(id, { $set: { active: false } })
+      .lean<Language>()
+      .exec();
+  }
+
   public static async update(language: Language): Promise<any> {
     const now = new Date();
     language.updatedAt = now;
