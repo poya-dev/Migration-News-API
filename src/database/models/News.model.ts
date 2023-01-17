@@ -2,6 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 import News from '../../types/news.type';
 
+const NEWS_STATUS = ['Draft', 'Submitted', 'Published', 'Inactivated'];
+
 export const schema = new Schema<News>(
   {
     title: {
@@ -18,7 +20,7 @@ export const schema = new Schema<News>(
     },
     status: {
       type: String,
-      enum: ['Draft', 'Submitted', 'Published'],
+      enum: NEWS_STATUS,
       default: 'Draft',
     },
     view_count: {
