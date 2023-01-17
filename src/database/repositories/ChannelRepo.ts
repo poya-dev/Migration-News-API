@@ -51,6 +51,18 @@ export default class ChannelRepo {
       .exec();
   }
 
+  public static async activate(id: Types.ObjectId): Promise<Channel> {
+    return ChannelModel.findByIdAndUpdate(id, { $set: { active: true } })
+      .lean<Channel>()
+      .exec();
+  }
+
+  public static async deactivate(id: Types.ObjectId): Promise<Channel> {
+    return ChannelModel.findByIdAndUpdate(id, { $set: { active: false } })
+      .lean<Channel>()
+      .exec();
+  }
+
   public static async update(channel: Channel): Promise<any> {
     const now = new Date();
     channel.updatedAt = now;
