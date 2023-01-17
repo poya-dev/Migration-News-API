@@ -68,20 +68,20 @@ router.get('/inactive', async (req: Request, res: Response) => {
   );
 });
 
-router.put('id/:id/activate', async (req: Request, res: Response) => {
+router.put('/id/:id/activate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
-  await LanguageRepo.activate(new Types.ObjectId(id));
+  const updateRec = await LanguageRepo.activate(new Types.ObjectId(id));
   return ApiResponse.successResponse(
     res,
     200,
-    rec,
+    updateRec,
     'Record activated successfully'
   );
 });
 
-router.put('id/:id/deactivate', async (req: Request, res: Response) => {
+router.put('/id/:id/deactivate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');

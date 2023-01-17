@@ -68,7 +68,7 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   );
 });
 
-router.put('id/:id/activate', async (req: Request, res: Response) => {
+router.put('/id/:id/activate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await ChannelRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
@@ -81,7 +81,7 @@ router.put('id/:id/activate', async (req: Request, res: Response) => {
   );
 });
 
-router.put('id/:id/deactivate', async (req: Request, res: Response) => {
+router.put('/id/:id/deactivate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await ChannelRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
