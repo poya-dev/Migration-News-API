@@ -31,8 +31,10 @@ export default class NewsRepo {
       .exec();
   }
 
-  public static async findNewsByLangId(id: Types.ObjectId): Promise<News[]> {
-    return NewsModel.find({ language: id })
+  public static async findByLanguageId(
+    id: Types.ObjectId
+  ): Promise<News[] | null> {
+    return NewsModel.find({ language: id, status: 'Published' })
       .populate({
         path: 'category',
         select: '_id name',
@@ -64,6 +66,46 @@ export default class NewsRepo {
         select: '_id name email',
       })
       .lean<News | null>()
+      .exec();
+  }
+
+  public static async actionSetDraft(id: Types.ObjectId): Promise<any> {
+    return NewsModel.findByIdAndUpdate(
+      id,
+      { $set: { status: 'Draft' } },
+      { new: true }
+    )
+      .lean<any>()
+      .exec();
+  }
+
+  public static async actionSetSubmitted(id: Types.ObjectId): Promise<any> {
+    return NewsModel.findByIdAndUpdate(
+      id,
+      { $set: { status: 'Submitted' } },
+      { new: true }
+    )
+      .lean<any>()
+      .exec();
+  }
+
+  public static async actionSetPublished(id: Types.ObjectId): Promise<any> {
+    return NewsModel.findByIdAndUpdate(
+      id,
+      { $set: { status: 'Published' } },
+      { new: true }
+    )
+      .lean<any>()
+      .exec();
+  }
+
+  public static async actionSetDeactivated(id: Types.ObjectId): Promise<any> {
+    return NewsModel.findByIdAndUpdate(
+      id,
+      { $set: { status: 'Deactivated' } },
+      { new: true }
+    )
+      .lean<any>()
       .exec();
   }
 
