@@ -12,6 +12,10 @@ export const schema = new Schema<Channel>(
       type: String,
       required: true,
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
     createdBy: {
       type: Types.ObjectId,
       ref: 'User',
