@@ -12,7 +12,7 @@ router.get('/', async (req: Request, res: Response) => {
   const language = await LanguageRepo.findByCode(langCode);
   if (!language)
     return ApiResponse.failureResponse(res, 404, 'Language not found');
-  const recs = await NewsRepo.findNewsByLangId(
+  const recs = await NewsRepo.findByLanguageId(
     new Types.ObjectId(language._id)
   );
   return ApiResponse.successResponse(
