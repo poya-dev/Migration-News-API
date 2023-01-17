@@ -8,15 +8,14 @@ export const schema = new Schema<NewsCategory>(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ['Draft', 'Submitted', 'Published'],
-      default: 'Draft',
-    },
     language: {
       type: Schema.Types.ObjectId,
       ref: 'Language',
       required: true,
+    },
+    active: {
+      type: Boolean,
+      default: false,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
