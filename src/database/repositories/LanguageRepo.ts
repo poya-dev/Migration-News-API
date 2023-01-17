@@ -9,7 +9,7 @@ export default class LanguageRepo {
     return newRec.toObject();
   }
 
-  public static async findAll(): Promise<Language[]> {
+  public static async findAll(): Promise<Language[] | null> {
     return LanguageModel.find()
       .populate({
         path: 'createdBy',
@@ -53,6 +53,15 @@ export default class LanguageRepo {
 
   public static async findByCode(code: string): Promise<Language | null> {
     return LanguageModel.findOne({ code: code }).lean<Language | null>().exec();
+  }
+
+  public static async findByActivateStatus(
+    activeStatus: boolean
+  ): Promise<Language[] | null> {
+    return LanguageModel.find({ active: activeStatus })
+      .select('_id name')
+      .lean<Language[]>()
+      .exec();
   }
 
   public static async activate(id: Types.ObjectId): Promise<Language> {
