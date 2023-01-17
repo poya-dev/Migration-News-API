@@ -64,6 +64,18 @@ export default class NewsCategoryRepo {
       .exec();
   }
 
+  public static async activate(id: Types.ObjectId): Promise<NewsCategory> {
+    return NewsCategoryModel.findByIdAndUpdate(id, { $set: { active: true } })
+      .lean<NewsCategory>()
+      .exec();
+  }
+
+  public static async deactivate(id: Types.ObjectId): Promise<NewsCategory> {
+    return NewsCategoryModel.findByIdAndUpdate(id, { $set: { active: false } })
+      .lean<NewsCategory>()
+      .exec();
+  }
+
   public static async update(newsCategory: NewsCategory): Promise<any> {
     const now = new Date();
     newsCategory.updatedAt = now;
