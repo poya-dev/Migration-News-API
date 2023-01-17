@@ -36,6 +36,18 @@ router.get('/', async (req: Request, res: Response) => {
   );
 });
 
+router.get('/id/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const rec = await LanguageRepo.findById(new Types.ObjectId(id));
+  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
+  return ApiResponse.successResponse(
+    res,
+    200,
+    rec,
+    'Record fetched successfully'
+  );
+});
+
 router.get('/active', async (req: Request, res: Response) => {
   const recs = await LanguageRepo.findByActivateStatus(true);
   return ApiResponse.successResponse(
@@ -56,19 +68,7 @@ router.get('/inactive', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/id/:id', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const rec = await LanguageRepo.findById(new Types.ObjectId(id));
-  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record fetched successfully'
-  );
-});
-
-router.get('id/:id/activate', async (req: Request, res: Response) => {
+router.put('id/:id/activate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
@@ -81,7 +81,7 @@ router.get('id/:id/activate', async (req: Request, res: Response) => {
   );
 });
 
-router.get('id/:id/deactivate', async (req: Request, res: Response) => {
+router.put('id/:id/deactivate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
