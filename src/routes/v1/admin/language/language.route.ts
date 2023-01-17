@@ -15,7 +15,6 @@ router.post('/', async (req: Request, res: Response) => {
   const newRec = await LanguageRepo.create({
     name: req.body.name,
     code: req.body.code,
-    flagUrl: req.body.flagUrl,
     createdBy: (req.user as User)._id,
     updatedBy: (req.user as User)._id,
   } as Language);
@@ -49,13 +48,38 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   );
 });
 
+router.get('activate/id/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const rec = await LanguageRepo.findById(new Types.ObjectId(id));
+  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
+  await LanguageRepo.activate(new Types.ObjectId(id));
+  return ApiResponse.successResponse(
+    res,
+    200,
+    rec,
+    'Record activated successfully'
+  );
+});
+
+router.get('deactivate/id/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const rec = await LanguageRepo.findById(new Types.ObjectId(id));
+  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
+  await LanguageRepo.deactivate(new Types.ObjectId(id));
+  return ApiResponse.successResponse(
+    res,
+    200,
+    rec,
+    'Record deactivated successfully'
+  );
+});
+
 router.put('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
   if (req.body.name) rec.name = req.body.name;
   if (req.body.code) rec.code = req.body.code;
-  if (req.body.flagUrl) rec.flagUrl = req.body.flagUrl;
   rec.updatedBy = (req.user as User)._id;
   const updateRec = await LanguageRepo.update(rec);
   return ApiResponse.successResponse(
