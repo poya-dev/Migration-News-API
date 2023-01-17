@@ -36,6 +36,26 @@ router.get('/', async (req: Request, res: Response) => {
   );
 });
 
+router.get('/active', async (req: Request, res: Response) => {
+  const recs = await LanguageRepo.findByActivateStatus(true);
+  return ApiResponse.successResponse(
+    res,
+    200,
+    recs,
+    'Records fetched successfully.'
+  );
+});
+
+router.get('/inactive', async (req: Request, res: Response) => {
+  const recs = await LanguageRepo.findByActivateStatus(false);
+  return ApiResponse.successResponse(
+    res,
+    200,
+    recs,
+    'Records fetched successfully.'
+  );
+});
+
 router.get('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await LanguageRepo.findById(new Types.ObjectId(id));
