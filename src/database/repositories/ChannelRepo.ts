@@ -51,6 +51,15 @@ export default class ChannelRepo {
       .exec();
   }
 
+  public static async findByActivateStatus(
+    activeStatus: boolean
+  ): Promise<Channel[] | null> {
+    return ChannelModel.find({ active: activeStatus })
+      .select('_id name iconUrl')
+      .lean<Channel[]>()
+      .exec();
+  }
+
   public static async activate(id: Types.ObjectId): Promise<Channel> {
     return ChannelModel.findByIdAndUpdate(id, { $set: { active: true } })
       .lean<Channel>()
