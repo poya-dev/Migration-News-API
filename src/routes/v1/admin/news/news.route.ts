@@ -52,7 +52,7 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/id/:id/draft', async (req: Request, res: Response) => {
+router.put('/id/:id/draft', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
@@ -65,7 +65,7 @@ router.get('/id/:id/draft', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/id/:id/submitted', async (req: Request, res: Response) => {
+router.put('/id/:id/submitted', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
@@ -78,7 +78,7 @@ router.get('/id/:id/submitted', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/id/:id/published', async (req: Request, res: Response) => {
+router.put('/id/:id/published', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
@@ -91,7 +91,7 @@ router.get('/id/:id/published', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/id/:id/deactivated', async (req: Request, res: Response) => {
+router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
