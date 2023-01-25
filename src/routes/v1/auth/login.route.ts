@@ -22,7 +22,13 @@ router.post('/', async (req: Request, res: Response) => {
     role: rec.role,
   };
   const token = signJwt(payload, { expiresIn: accessTokenExpiresIn });
-  return ApiResponse.sendAccessToken(res, 200, token, 'Login success.');
+  return ApiResponse.sendAccessToken(
+    res,
+    200,
+    _.pick(rec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
+    token,
+    'Login success.'
+  );
 });
 
 export default router;

@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import passport from 'passport';
+import _ from 'lodash';
 
 import ApiResponse from '../../../utils/api-response';
 import { accessTokenExpiresIn } from '../../../config';
@@ -23,6 +24,7 @@ router.post(
     return ApiResponse.sendAccessToken(
       res,
       201,
+      _.pick(user, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
       token,
       'Facebook sign up success'
     );

@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import _ from 'lodash';
 
 import { verifyGoogleIdToken } from '../../../utils/auth.utils';
 import UserRepo from '../../../database/repositories/UserRepo';
@@ -32,7 +33,9 @@ router.get('/', async (req: Request, res: Response) => {
     return ApiResponse.sendAccessToken(
       res,
       201,
+      _.pick(user, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
       accessToken,
+
       'Google sign up success'
     );
   } catch (error: any) {
