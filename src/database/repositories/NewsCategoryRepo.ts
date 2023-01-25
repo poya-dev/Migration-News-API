@@ -14,6 +14,10 @@ export default class NewsCategoryRepo {
   public static async findAll(): Promise<NewsCategory[]> {
     return NewsCategoryModel.find()
       .populate({
+        path: 'language',
+        select: '_id name',
+      })
+      .populate({
         path: 'createdBy',
         select: '_id name email',
       })
@@ -38,6 +42,7 @@ export default class NewsCategoryRepo {
     id: Types.ObjectId
   ): Promise<NewsCategory | null> {
     return NewsCategoryModel.findById(id)
+
       .populate({
         path: 'createdBy',
         select: '_id name email',
