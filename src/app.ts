@@ -19,7 +19,19 @@ app.use(
     parameterLimit: 50000,
   })
 );
-app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
+
+const whitelist = ['http://localhost:3001'];
+
+const corsOptions = {
+  credentials: true,
+  optionsSuccessStatus: 200,
+  origin: (origin: any, callback: any) => {
+    if (whitelist.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api/v1', RouteV1);
 
