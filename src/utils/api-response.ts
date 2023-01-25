@@ -4,11 +4,13 @@ export default class ApiResponse {
   public static sendAccessToken(
     res: Response,
     code: number,
+    user: any,
     token: string,
     successMessage = 'successfully'
   ) {
     return res.status(code).json({
       status: 'success',
+      user: user,
       accessToken: token,
       successMessage: successMessage,
     });
