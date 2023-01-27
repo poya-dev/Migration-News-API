@@ -20,12 +20,16 @@ app.use(
   })
 );
 
-const whitelist = ['http://localhost:3001'];
+const whitelist = ['http://localhost:3001', '*'];
 
 const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
   origin: (origin: any, callback: any) => {
+    if (!origin) {
+      //for bypassing postman req with  no origin
+      return callback(null, true);
+    }
     if (whitelist.includes(origin)) return callback(null, true);
     callback(new Error('Not allowed by CORS'));
   },
