@@ -20,6 +20,10 @@ export default class NewsRepo {
         select: '_id name iconUrl',
       })
       .populate({
+        path: 'language',
+        select: '_id name',
+      })
+      .populate({
         path: 'createdBy',
         select: '_id name email',
       })
@@ -56,6 +60,10 @@ export default class NewsRepo {
       .populate({
         path: 'channel',
         select: '_id name iconUrl',
+      })
+      .populate({
+        path: 'language',
+        select: '_id name',
       })
       .populate({
         path: 'createdBy',
