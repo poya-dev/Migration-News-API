@@ -69,6 +69,15 @@ export default class NewsCategoryRepo {
       .exec();
   }
 
+  public static async findByActiveStatus(
+    activeStatus: Boolean
+  ): Promise<NewsCategory[]> {
+    return NewsCategoryModel.find({ active: activeStatus })
+      .select('_id name')
+      .lean<NewsCategory[]>()
+      .exec();
+  }
+
   public static async activate(id: Types.ObjectId): Promise<NewsCategory> {
     return NewsCategoryModel.findByIdAndUpdate(id, { $set: { active: true } })
       .lean<NewsCategory>()
