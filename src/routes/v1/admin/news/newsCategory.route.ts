@@ -48,6 +48,16 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   );
 });
 
+router.get('/active', async (req: Request, res: Response) => {
+  const recs = await NewsCategoryRepo.findByActiveStatus(true);
+  return ApiResponse.successResponse(
+    res,
+    200,
+    recs,
+    'Records fetched successfully'
+  );
+});
+
 router.put('/id/:id/activate', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsCategoryRepo.findById(new Types.ObjectId(id));
