@@ -9,16 +9,28 @@ import _ from 'lodash';
 
 const router = express.Router();
 
-type QueryParam = { lang?: string; page?: string; limit?: string };
+type QueryParam = {
+  lang?: string;
+  category?: string;
+  page?: string;
+  limit?: string;
+};
 
 router.get('/', async (req: Request, res: Response) => {
-  const { lang = 'en', page = '1', limit = '10' } = req.query as QueryParam;
+  const {
+    category,
+    lang = 'en',
+    page = '1',
+    limit = '10',
+  } = req.query as QueryParam;
   const language = await LanguageRepo.findByCode(lang);
   if (!language)
     return ApiResponse.failureResponse(res, 404, 'Language not found');
-  const id = new Types.ObjectId(language._id);
-  const recs = await NewsRepo.findNews(id, parseInt(page), parseInt(limit));
-  const count = await NewsModel.countDocuments({ status: 'Published' });
+  const filter = { status: 'Published' };
+  Object.assign(filter, { language: new Types.ObjectId(language._id) });
+  category && Object.assign(filter, { category: new Types.ObjectId(category) });
+  const recs = await NewsRepo.findNews(filter, parseInt(page), parseInt(limit));
+  const count = await NewsModel.countDocuments(filter);
   const lastPage = Math.ceil(count / parseInt(limit));
   return ApiResponse.successResponse(res, 200, recs, parseInt(page), lastPage);
 });
