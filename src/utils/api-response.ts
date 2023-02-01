@@ -5,26 +5,23 @@ export default class ApiResponse {
     res: Response,
     code: number,
     user: any,
-    token: string,
-    successMessage = 'successfully'
+    token: string
   ) {
-    return res.status(code).json({
-      status: 'success',
-      user: user,
-      accessToken: token,
-      successMessage: successMessage,
-    });
+    return res
+      .status(code)
+      .json({ status: 'success', user: user, accessToken: token });
   }
 
   public static successResponse(
     res: Response,
     code: number,
     data: any,
-    successMessage = 'successfully'
+    currentPage?: number,
+    lastPage?: number
   ) {
     return res
       .status(code)
-      .json({ status: 'success', data: data, successMessage: successMessage });
+      .json({ status: 'success', data: data, currentPage, lastPage });
   }
 
   public static failureResponse(
