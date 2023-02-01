@@ -26,8 +26,7 @@ router.post('/', async (req: Request, res: Response) => {
     res,
     200,
     _.pick(rec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
-    token,
-    'Login success.'
+    token
   );
 });
 

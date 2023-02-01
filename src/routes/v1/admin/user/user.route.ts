@@ -23,8 +23,7 @@ router.post('/', async (req: Request, res: Response) => {
   return ApiResponse.successResponse(
     res,
     201,
-    _.pick(newRec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
-    'User created successfully.'
+    _.pick(newRec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl'])
   );
 });
 
@@ -65,12 +64,7 @@ router.put('/id/:id', async (req: Request, res: Response) => {
   if (req.body.name) rec.name = req.body.name;
   if (req.body.userPictureUrl) rec.userPictureUrl = req.body.userPictureUrl;
   const updateRec = await UserRepo.update(rec);
-  ApiResponse.successResponse(
-    res,
-    200,
-    updateRec,
-    'User updated successfully.'
-  );
+  ApiResponse.successResponse(res, 200, updateRec);
 });
 
 router.delete('/id/:id', async (req: Request, res: Response) => {
@@ -82,8 +76,7 @@ router.delete('/id/:id', async (req: Request, res: Response) => {
   return ApiResponse.successResponse(
     res,
     200,
-    _.pick(deleteRec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
-    'User removed successfully.'
+    _.pick(deleteRec, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl'])
   );
 });
 

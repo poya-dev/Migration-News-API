@@ -25,8 +25,7 @@ router.post(
       res,
       201,
       _.pick(user, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
-      token,
-      'Facebook sign up success'
+      token
     );
   }
 );

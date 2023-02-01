@@ -34,9 +34,7 @@ router.get('/', async (req: Request, res: Response) => {
       res,
       201,
       _.pick(user, ['_id', 'name', 'email', 'isVerified', 'userPictureUrl']),
-      accessToken,
-
-      'Google sign up success'
+      accessToken
     );
   } catch (error: any) {
     return ApiResponse.failureResponse(res, 401, 'Google ID token invalid');

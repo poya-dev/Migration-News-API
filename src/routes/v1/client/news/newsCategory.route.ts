@@ -15,12 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsCategoryRepo.findByLanguageId(
     new Types.ObjectId(language._id)
   );
-  return ApiResponse.successResponse(
-    res,
-    200,
-    recs,
-    'Records fetched successfully'
-  );
+  return ApiResponse.successResponse(res, 200, recs);
 });
 
 export default router;

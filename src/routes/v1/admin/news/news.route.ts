@@ -22,34 +22,19 @@ router.post('/', async (req: Request, res: Response) => {
     createdBy: (req.user as User)._id,
     updatedBy: (req.user as User)._id,
   } as News);
-  return ApiResponse.successResponse(
-    res,
-    201,
-    newRec,
-    'Record created successfully.'
-  );
+  return ApiResponse.successResponse(res, 201, newRec);
 });
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsRepo.findAll();
-  return ApiResponse.successResponse(
-    res,
-    200,
-    recs,
-    'Records fetched successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, recs);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record fetched successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/', async (req: Request, res: Response) => {
@@ -64,12 +49,7 @@ router.put('/id/:id/', async (req: Request, res: Response) => {
   if (req.body.channel) rec.channel = req.body.channel;
   rec.updatedBy = (req.user as User)._id;
   await NewsRepo.update(rec);
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record updated successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/draft', async (req: Request, res: Response) => {
@@ -77,12 +57,7 @@ router.put('/id/:id/draft', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetDraft(new Types.ObjectId(id));
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record status changed to draft successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/submitted', async (req: Request, res: Response) => {
@@ -90,12 +65,7 @@ router.put('/id/:id/submitted', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetSubmitted(new Types.ObjectId(id));
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record status changed to submitted successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/published', async (req: Request, res: Response) => {
@@ -103,12 +73,7 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetPublished(new Types.ObjectId(id));
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record status changed to published successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
@@ -116,12 +81,7 @@ router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetDeactivated(new Types.ObjectId(id));
-  return ApiResponse.successResponse(
-    res,
-    200,
-    rec,
-    'Record status changed to deactivated successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, rec);
 });
 
 router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
@@ -136,12 +96,7 @@ router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
   if (req.body.channel) rec.channel = req.body.channel;
   rec.updatedBy = (req.user as User)._id;
   const updateRec = await NewsRepo.update(rec);
-  return ApiResponse.successResponse(
-    res,
-    200,
-    updateRec,
-    'Record updated successfully'
-  );
+  return ApiResponse.successResponse(res, 200, updateRec);
 });
 
 router.delete('/id/:id', async (req: Request, res: Response) => {
@@ -149,12 +104,7 @@ router.delete('/id/:id', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
   const deleteRec = await NewsRepo.remove(new Types.ObjectId(id));
-  return ApiResponse.successResponse(
-    res,
-    200,
-    deleteRec,
-    'Record deleted successfully.'
-  );
+  return ApiResponse.successResponse(res, 200, deleteRec);
 });
 
 export default router;

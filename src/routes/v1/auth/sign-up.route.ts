@@ -24,8 +24,7 @@ router.post('/', async (req: Request, res: Response) => {
   return ApiResponse.successResponse(
     res,
     201,
-    _.pick(newRec, ['_id', 'name', 'email', 'userPictureUrl']),
-    'Signed-up success'
+    _.pick(newRec, ['_id', 'name', 'email', 'userPictureUrl'])
   );
 });
 

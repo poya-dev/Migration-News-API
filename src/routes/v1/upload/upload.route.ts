@@ -6,12 +6,7 @@ const router = express.Router();
 
 router.post('/', (req: Request, res: Response) => {
   const imagePath = req.file?.path;
-  return ApiResponse.successResponse(
-    res,
-    201,
-    imagePath,
-    'File uploaded successfully'
-  );
+  return ApiResponse.successResponse(res, 201, imagePath);
 });
 
 export default router;
