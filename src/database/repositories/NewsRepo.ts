@@ -36,11 +36,12 @@ export default class NewsRepo {
   }
 
   public static async findNews(
-    language: Types.ObjectId,
+    filter: any,
     page: number,
     limit: number
   ): Promise<News[] | null> {
-    return NewsModel.find({ language: language, status: 'Published' })
+    return NewsModel.find(filter)
+      .select('_id title imageUrl view_count createdAt')
       .populate('category', '_id name')
       .populate('channel', '_id name iconUrl')
       .limit(limit * 1)
