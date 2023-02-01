@@ -35,18 +35,16 @@ export default class NewsRepo {
       .exec();
   }
 
-  public static async findByLanguageId(
-    id: Types.ObjectId
+  public static async findNews(
+    language: Types.ObjectId,
+    page: number,
+    limit: number
   ): Promise<News[] | null> {
-    return NewsModel.find({ language: id, status: 'Published' })
-      .populate({
-        path: 'category',
-        select: '_id name',
-      })
-      .populate({
-        path: 'channel',
-        select: '_id name iconUrl',
-      })
+    return NewsModel.find({ language: language, status: 'Published' })
+      .populate('category', '_id name')
+      .populate('channel', '_id name iconUrl')
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
       .lean<News[]>()
       .exec();
   }
