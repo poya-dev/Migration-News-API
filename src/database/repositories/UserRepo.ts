@@ -36,8 +36,35 @@ export default class UserRepo {
     return rec.toObject();
   }
 
+  public static async addBookmark(
+    id: Types.ObjectId,
+    news: Types.ObjectId
+  ): Promise<User> {
+    return UserModel.findByIdAndUpdate(id, {
+      $push: { bookmarkNews: news },
+    })
+      .lean<User>()
+      .exec();
+  }
+
+  public static async removeBookmark(
+    id: Types.ObjectId,
+    news: Types.ObjectId
+  ): Promise<User | null> {
+    return UserModel.findByIdAndUpdate(id, {
+      $pull: { bookmarkNews: news },
+    });
+  }
+
   public static async findAll(): Promise<User[]> {
     return UserModel.find().select(USER_DETAILS).lean<User[]>().exec();
+  }
+
+  public static async findBookmarks(id: Types.ObjectId): Promise<User | null> {
+    return UserModel.findById(id)
+      .select('_id name')
+      .populate({ path: 'bookmarkNews', populate: { path: 'category' } })
+      .populate({ path: 'bookmarkNews', populate: { path: 'channel' } });
   }
 
   public static async findById(id: Types.ObjectId): Promise<User | null> {
