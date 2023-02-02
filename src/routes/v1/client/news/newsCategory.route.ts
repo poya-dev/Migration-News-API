@@ -7,9 +7,11 @@ import ApiResponse from '../../../../utils/api-response';
 
 const router = express.Router();
 
+type QueryParam = { lang?: string };
+
 router.get('/', async (req: Request, res: Response) => {
-  const langCode = req.query.langCode as string;
-  const language = await LanguageRepo.findByCode(langCode);
+  const { lang = 'en' } = req.query as QueryParam;
+  const language = await LanguageRepo.findByCode(lang);
   if (!language)
     return ApiResponse.failureResponse(res, 404, 'Language not found');
   const recs = await NewsCategoryRepo.findByLanguageId(
