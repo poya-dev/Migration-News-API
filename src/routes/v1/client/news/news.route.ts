@@ -5,7 +5,6 @@ import LanguageRepo from '../../../../database/repositories/LanguageRepo';
 import NewsRepo from '../../../../database/repositories/NewsRepo';
 import ApiResponse from '../../../../utils/api-response';
 import NewsModel from '../../../../database/models/News.model';
-import _ from 'lodash';
 
 const router = express.Router();
 
