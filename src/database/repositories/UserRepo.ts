@@ -63,8 +63,14 @@ export default class UserRepo {
   public static async findBookmarks(id: Types.ObjectId): Promise<User | null> {
     return UserModel.findById(id)
       .select('_id name')
-      .populate({ path: 'bookmarkNews', populate: { path: 'category' } })
-      .populate({ path: 'bookmarkNews', populate: { path: 'channel' } });
+      .populate({
+        path: 'bookmarkNews',
+        populate: { path: 'category', select: '_id name' },
+      })
+      .populate({
+        path: 'bookmarkNews',
+        populate: { path: 'channel', select: '_id name' },
+      });
   }
 
   public static async findById(id: Types.ObjectId): Promise<User | null> {
