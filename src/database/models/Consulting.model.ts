@@ -1,8 +1,8 @@
 import mongoose, { Types, Schema } from 'mongoose';
 
-import Consultation from '../../types/consultation.type';
+import Consulting from '../../types/consulting.type';
 
-export const schema = new Schema<Consultation>(
+export const schema = new Schema<Consulting>(
   {
     name: {
       type: String,
@@ -32,4 +32,4 @@ export const schema = new Schema<Consultation>(
   { timestamps: true }
 );
 
-export default mongoose.model<Consultation>('Consultation', schema);
+export default mongoose.model<Consulting>('Consulting', schema);
