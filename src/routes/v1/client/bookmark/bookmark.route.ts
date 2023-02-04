@@ -7,28 +7,28 @@ import User from '../../../../types/user.type';
 
 const router = express.Router();
 
-router.get('/bookmark', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
   const recs = await UserRepo.findBookmarks(new Types.ObjectId(_id));
   return ApiResponse.successResponse(res, 200, recs);
 });
 
-router.post('/bookmark', async (req: Request, res: Response) => {
+router.put('/add/:newsId', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const { news } = req.body;
+  const { newsId } = req.params;
   const updateRec = await UserRepo.addBookmark(
     new Types.ObjectId(_id),
-    new Types.ObjectId(news)
+    new Types.ObjectId(newsId)
   );
   return ApiResponse.successResponse(res, 200, updateRec);
 });
 
-router.delete('/bookmark/:news', async (req: Request, res: Response) => {
+router.put('/remove/:newsId', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const { news } = req.params;
+  const { newsId } = req.params;
   const deleteRec = await UserRepo.removeBookmark(
     new Types.ObjectId(_id),
-    new Types.ObjectId(news)
+    new Types.ObjectId(newsId)
   );
   return ApiResponse.successResponse(res, 200, deleteRec);
 });
