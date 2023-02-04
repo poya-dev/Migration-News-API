@@ -53,7 +53,9 @@ export default class UserRepo {
   ): Promise<User | null> {
     return UserModel.findByIdAndUpdate(id, {
       $pull: { bookmarkNews: news },
-    });
+    })
+      .lean<User>()
+      .exec();
   }
 
   public static async findAll(): Promise<User[]> {
