@@ -5,6 +5,7 @@ import NewsRepo from '../../../../database/repositories/NewsRepo';
 import ApiResponse from '../../../../utils/api-response';
 import News from '../../../../types/news.type';
 import User from '../../../../types/user.type';
+import socket from '../../../../socket';
 
 const router = express.Router();
 
@@ -73,6 +74,7 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetPublished(new Types.ObjectId(id));
+  socket.getIO().emit('newPost', 'New post created');
   return ApiResponse.successResponse(res, 200, rec);
 });
 
