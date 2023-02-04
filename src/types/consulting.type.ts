@@ -7,7 +7,7 @@ export default interface Consulting {
   name: string;
   address: string;
   phone: string;
-  response?: object;
+  response?: { message: string; createdAt: Date };
   createdBy?: User['_id'];
   createdAt?: Date;
   updatedAt?: Date;
