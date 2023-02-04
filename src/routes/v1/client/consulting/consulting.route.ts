@@ -20,8 +20,8 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const rec = await ConsultingRepo.findByUserId(new Types.ObjectId(_id));
-  return ApiResponse.successResponse(res, 200, rec);
+  const recs = await ConsultingRepo.findByUserId(new Types.ObjectId(_id));
+  return ApiResponse.successResponse(res, 200, recs);
 });
 
 export default router;
