@@ -15,7 +15,7 @@ import httpServer from './app';
       });
       const io = socket.init(httpServer);
       io.on('connection', (socket: any) => {
-        console.log('****** Client connected ******');
+        console.log(`****** Client connected ${socket.id} ******`);
       });
     })
     .catch((e) => {
