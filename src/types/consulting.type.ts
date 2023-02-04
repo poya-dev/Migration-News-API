@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 import User from './user.type';
 
-export default interface Consultation {
+export default interface Consulting {
   _id?: Types.ObjectId;
   name: string;
   address: string;
