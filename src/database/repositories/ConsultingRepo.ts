@@ -31,16 +31,13 @@ export default class ConsultationRepo {
       .exec();
   }
 
-  public static async findByUserId(
-    id: Types.ObjectId
-  ): Promise<Consulting | null> {
-    return ConsultingModel.find({ user: id })
+  public static async findByUserId(id: Types.ObjectId): Promise<Consulting[]> {
+    return ConsultingModel.find({ createdBy: id })
+      .select('_id')
       .populate('response')
-      .populate({
-        path: 'createdBy',
-        select: '_id name email',
-      })
-      .lean<Consulting | null>()
+      .where('response.message')
+      .ne(null)
+      .lean<Consulting[]>()
       .exec();
   }
 
