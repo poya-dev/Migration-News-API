@@ -51,12 +51,10 @@ export default class NewsRepo {
           },
         },
       },
-      {
-        $match: { $and: [filter] },
-      },
+      { $match: { $and: [filter] } },
       { $project: { bookmarks: 0 } },
-      { $limit: limit * 1 },
       { $skip: (page - 1) * limit },
+      { $limit: limit * 1 },
     ]);
   }
 
