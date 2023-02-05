@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
+import NewsCategoryRepo from '../../../../database/repositories/NewsCategoryRepo';
 import LanguageRepo from '../../../../database/repositories/LanguageRepo';
 import NewsRepo from '../../../../database/repositories/NewsRepo';
-import ApiResponse from '../../../../utils/api-response';
 import NewsModel from '../../../../database/models/News.model';
+import ApiResponse from '../../../../utils/api-response';
+import User from '../../../../types/user.type';
 
 const router = express.Router();
 
@@ -22,13 +24,21 @@ router.get('/', async (req: Request, res: Response) => {
     page = '1',
     limit = '10',
   } = req.query as QueryParam;
+  const filter = { status: 'Published' };
+  const user = { user: (req.user as User)._id };
   const language = await LanguageRepo.findByCode(lang);
   if (!language)
     return ApiResponse.failureResponse(res, 404, 'Language not found');
-  const filter = { status: 'Published' };
-  Object.assign(filter, { language: new Types.ObjectId(language._id) });
-  category && Object.assign(filter, { category: new Types.ObjectId(category) });
-  const recs = await NewsRepo.findNews(filter, parseInt(page), parseInt(limit));
+  let categoryRec;
+  if (category) categoryRec = await NewsCategoryRepo.findByName(category);
+  Object.assign(filter, { 'language.name': language.name });
+  categoryRec && Object.assign(filter, { 'category.name': categoryRec.name });
+  const recs = await NewsRepo.findNews(
+    user,
+    filter,
+    parseInt(page),
+    parseInt(limit)
+  );
   const count = await NewsModel.countDocuments(filter);
   const lastPage = Math.ceil(count / parseInt(limit));
   return ApiResponse.successResponse(res, 200, recs, parseInt(page), lastPage);
