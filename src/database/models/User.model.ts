@@ -29,12 +29,6 @@ export const schema = new Schema<User>(
     userPictureUrl: {
       type: String,
     },
-    bookmarkNews: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'News',
-      },
-    ],
     isVerified: {
       type: Boolean,
       default: false,

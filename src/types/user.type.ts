@@ -10,7 +10,6 @@ export default interface User {
   role?: string;
   authProvider?: AuthProvider;
   userPictureUrl?: string;
-  bookmarkNews: [Types.ObjectId];
   isVerified?: boolean;
   lastActive?: Date;
   resetPasswordToken?: string;
