@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
 import News from '../../types/news.type';
-
 const NEWS_STATUS = ['Draft', 'Submitted', 'Published', 'Inactivated'];
 
 export const schema = new Schema<News>(
@@ -28,31 +27,38 @@ export const schema = new Schema<News>(
       default: 0,
     },
     language: {
-      type: Schema.Types.ObjectId,
-      ref: 'Language',
+      type: {
+        name: String,
+        code: String,
+      },
       required: true,
     },
     channel: {
-      type: Schema.Types.ObjectId,
-      ref: 'Channel',
+      type: {
+        name: String,
+        iconUrl: String,
+      },
       required: true,
     },
     category: {
-      type: Schema.Types.ObjectId,
-      ref: 'NewsCategory',
+      type: {
+        name: String,
+      },
       required: true,
     },
     createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: {
+        name: String,
+        email: String,
+      },
       required: true,
-      select: false,
     },
     updatedBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: {
+        name: String,
+        email: String,
+      },
       required: true,
-      select: false,
     },
   },
   { timestamps: true }

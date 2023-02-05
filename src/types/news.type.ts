@@ -1,9 +1,20 @@
 import { Types } from 'mongoose';
 
-import NewsCategory from './newsCategory.type';
-import Language from './language.type';
-import Channel from './channel.type';
-import User from './user.type';
+interface Channel {
+  name: string;
+  iconUrl: string;
+}
+interface Language {
+  name: string;
+  code: string;
+}
+interface Category {
+  name: string;
+}
+interface User {
+  name: string;
+  email: string;
+}
 
 export default interface News {
   _id?: Types.ObjectId;
@@ -12,11 +23,11 @@ export default interface News {
   imageUrl: string;
   status?: string;
   view_count: number;
-  channel: Channel['_id'];
-  language: Language['_id'];
-  category: NewsCategory['_id'];
-  createdBy?: User['_id'];
-  updatedBy?: User['_id'];
+  channel: Channel;
+  language: Language;
+  category: Category;
+  createdBy?: User;
+  updatedBy?: User;
   createdAt?: Date;
   updatedAt?: Date;
 }
