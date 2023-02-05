@@ -1,35 +1,41 @@
 import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
-import UserRepo from '../../../../database/repositories/UserRepo';
+import BookmarkRepo from '../../../../database/repositories/BookmarkRepo';
 import ApiResponse from '../../../../utils/api-response';
+import Bookmark from '../../../../types/bookmark.type';
 import User from '../../../../types/user.type';
 
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const { _id } = req.user as User;
-  const recs = await UserRepo.findBookmarks(new Types.ObjectId(_id));
+  const recs = await BookmarkRepo.findAll();
   return ApiResponse.successResponse(res, 200, recs);
 });
 
-router.put('/add/:newsId', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const { newsId } = req.params;
-  const updateRec = await UserRepo.addBookmark(
-    new Types.ObjectId(_id),
-    new Types.ObjectId(newsId)
-  );
-  return ApiResponse.successResponse(res, 200, updateRec);
+  const { news } = req.body;
+  const bookmark = {
+    user: new Types.ObjectId(_id),
+    news: new Types.ObjectId(news),
+  } as Bookmark;
+  const isBookmark = await BookmarkRepo.findByFilter(bookmark);
+  if (isBookmark) {
+    return ApiResponse.failureResponse(res, 401, 'Already exist');
+  }
+  const newRec = await BookmarkRepo.add(bookmark);
+  return ApiResponse.successResponse(res, 200, newRec);
 });
 
-router.put('/remove/:newsId', async (req: Request, res: Response) => {
+router.delete('/id/:news', async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const { newsId } = req.params;
-  const deleteRec = await UserRepo.removeBookmark(
-    new Types.ObjectId(_id),
-    new Types.ObjectId(newsId)
-  );
+  const { news } = req.params;
+  const filter = {
+    user: new Types.ObjectId(_id),
+    news: new Types.ObjectId(news),
+  };
+  const deleteRec = await BookmarkRepo.remove(filter);
   return ApiResponse.successResponse(res, 200, deleteRec);
 });
 
