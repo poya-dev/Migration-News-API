@@ -10,70 +10,58 @@ export default class NewsRepo {
   }
 
   public static async findAll(): Promise<News[]> {
-    return NewsModel.find()
-      .populate({
-        path: 'category',
-        select: '_id name',
-      })
-      .populate({
-        path: 'channel',
-        select: '_id name iconUrl',
-      })
-      .populate({
-        path: 'language',
-        select: '_id name',
-      })
-      .populate({
-        path: 'createdBy',
-        select: '_id name email',
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id name email',
-      })
-      .lean<News[]>()
-      .exec();
+    return NewsModel.find().lean<News[]>().exec();
   }
 
   public static async findNews(
+    user: any,
     filter: any,
     page: number,
     limit: number
-  ): Promise<News[] | null> {
-    return NewsModel.find(filter)
-      .select('_id title imageUrl view_count createdAt')
-      .populate('category', '_id name')
-      .populate('channel', '_id name iconUrl')
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .lean<News[]>()
-      .exec();
+  ): Promise<any> {
+    return NewsModel.aggregate([
+      {
+        $lookup: {
+          from: 'bookmarks',
+          localField: '_id',
+          foreignField: 'news',
+          pipeline: [
+            {
+              $match: user,
+            },
+          ],
+          as: 'bookmarks',
+        },
+      },
+      {
+        $addFields: {
+          isBookmark: {
+            $cond: [
+              {
+                $eq: [
+                  {
+                    $size: '$bookmarks',
+                  },
+                  0,
+                ],
+              },
+              false,
+              true,
+            ],
+          },
+        },
+      },
+      {
+        $match: { $and: [filter] },
+      },
+      { $project: { bookmarks: 0 } },
+      { $limit: limit * 1 },
+      { $skip: (page - 1) * limit },
+    ]);
   }
 
   public static async findById(id: Types.ObjectId): Promise<News | null> {
-    return NewsModel.findById(id)
-      .populate({
-        path: 'category',
-        select: '_id name',
-      })
-      .populate({
-        path: 'channel',
-        select: '_id name iconUrl',
-      })
-      .populate({
-        path: 'language',
-        select: '_id name',
-      })
-      .populate({
-        path: 'createdBy',
-        select: '_id name email',
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id name email',
-      })
-      .lean<News | null>()
-      .exec();
+    return NewsModel.findById(id).lean<News | null>().exec();
   }
 
   public static async actionSetDraft(id: Types.ObjectId): Promise<any> {
@@ -124,38 +112,12 @@ export default class NewsRepo {
       { $inc: { view_count: 1 } },
       { new: true }
     )
-      .populate({
-        path: 'category',
-        select: '_id name',
-      })
-      .populate({
-        path: 'channel',
-        select: '_id name iconUrl',
-      })
       .lean<News>()
       .exec();
   }
 
   public static async findByTitle(title: string): Promise<News | null> {
-    return NewsModel.findOne({ title: title })
-      .populate({
-        path: 'category',
-        select: '_id name',
-      })
-      .populate({
-        path: 'channel',
-        select: '_id name iconUrl',
-      })
-      .populate({
-        path: 'createdBy',
-        select: '_id name email',
-      })
-      .populate({
-        path: 'updatedBy',
-        select: '_id name email',
-      })
-      .lean<News | null>()
-      .exec();
+    return NewsModel.findOne({ title: title }).lean<News | null>().exec();
   }
 
   public static async update(news: News): Promise<any> {
