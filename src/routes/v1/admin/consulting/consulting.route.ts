@@ -2,6 +2,9 @@ import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
 import ConsultingRepo from '../../../../database/repositories/ConsultingRepo';
+import { ToOnNotificationType } from '../../../../services/notificationService';
+import NotificationService from '../../../../services/notificationService';
+import UserRepo from '../../../../database/repositories/UserRepo';
 import ApiResponse from '../../../../utils/api-response';
 
 const router = express.Router();
@@ -19,7 +22,25 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
     new Types.ObjectId(id),
     req.body.responseMessage
   );
-  return ApiResponse.successResponse(res, 200, newRec);
+  const token = await UserRepo.findDeviceTokenById(
+    new Types.ObjectId(rec.createdBy?._id)
+  );
+  ApiResponse.successResponse(res, 200, newRec);
+  if (token && token?.deviceToken) {
+    try {
+      const notification = {
+        token: token.deviceToken,
+        id: newRec._id,
+        title: 'Update about consulting',
+        body: newRec.response?.message,
+        type: 'Consulting',
+      } as ToOnNotificationType;
+      await NotificationService.sendToOneDevice(notification);
+      console.log('*** Notification sent successfully ***');
+    } catch (e) {
+      console.log('** Unfortunately notification Failed to send **', e);
+    }
+  }
 });
 
 router.delete('/id/:id', async (req: Request, res: Response) => {
