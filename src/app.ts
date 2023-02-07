@@ -7,6 +7,8 @@ import path from 'path';
 
 import './services/facebookPassport.service';
 
+import NotificationService from './services/notificationService';
+
 // API V1 route
 import RouteV1 from './routes/v1';
 
@@ -25,6 +27,8 @@ const corsOptions = {
     callback(new Error('Not allowed by CORS'));
   },
 };
+
+NotificationService.initializeService();
 
 app.use('/uploads/images', express.static(path.join(__dirname, '../uploads')));
 app.use(passport.initialize());
