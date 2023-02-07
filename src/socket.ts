@@ -9,7 +9,7 @@ export default {
   },
   getIO: () => {
     if (!io) {
-      throw new Error('****** Socket.io not initialized ******');
+      throw new Error('*** Error ocurred upon socket initialization ***');
     }
     return io;
   },
