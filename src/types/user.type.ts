@@ -12,6 +12,7 @@ export default interface User {
   userPictureUrl?: string;
   isVerified?: boolean;
   lastActive?: Date;
+  deviceToken?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   createdAt?: Date;

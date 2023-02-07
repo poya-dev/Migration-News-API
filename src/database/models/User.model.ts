@@ -36,6 +36,9 @@ export const schema = new Schema<User>(
     lastActive: {
       type: Date,
     },
+    deviceToken: {
+      type: String,
+    },
     resetPasswordToken: {
       type: String,
     },
