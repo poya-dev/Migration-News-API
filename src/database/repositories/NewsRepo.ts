@@ -103,15 +103,45 @@ export default class NewsRepo {
   }
 
   public static async findAndUpdateViewCount(
-    id: Types.ObjectId
-  ): Promise<News | null> {
-    return NewsModel.findByIdAndUpdate(
-      id,
-      { $inc: { view_count: 1 } },
-      { new: true }
-    )
-      .lean<News>()
-      .exec();
+    user: Types.ObjectId,
+    recId: Types.ObjectId
+  ): Promise<any> {
+    await NewsModel.findByIdAndUpdate(recId, { $inc: { view_count: 1 } });
+    return NewsModel.aggregate([
+      {
+        $lookup: {
+          from: 'bookmarks',
+          localField: '_id',
+          foreignField: 'news',
+          pipeline: [
+            {
+              $match: { user: user },
+            },
+          ],
+          as: 'bookmarks',
+        },
+      },
+      {
+        $addFields: {
+          isBookmark: {
+            $cond: [
+              {
+                $eq: [
+                  {
+                    $size: '$bookmarks',
+                  },
+                  0,
+                ],
+              },
+              false,
+              true,
+            ],
+          },
+        },
+      },
+      { $match: { _id: recId } },
+      { $limit: 1 },
+    ]);
   }
 
   public static async findByTitle(title: string): Promise<News | null> {
