@@ -62,6 +62,19 @@ export default class UserRepo {
     return UserModel.find().select(USER_DETAILS).lean<User[]>().exec();
   }
 
+  public static async findDeviceTokenById(
+    userId: Types.ObjectId
+  ): Promise<User | null> {
+    return UserModel.findById(userId)
+      .select('deviceToken')
+      .lean<User | null>()
+      .exec();
+  }
+
+  public static async findAllDeviceToken(): Promise<any[] | null> {
+    return UserModel.find().select('deviceToken').lean<any[]>().exec();
+  }
+
   public static async findBookmarks(id: Types.ObjectId): Promise<User | null> {
     return UserModel.findById(id)
       .select('_id name')
