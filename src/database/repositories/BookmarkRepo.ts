@@ -13,7 +13,6 @@ export default class BookmarkRepo {
 
   public static async findAll(): Promise<Bookmark[] | null> {
     return BookmarkModel.find()
-      .populate('user')
       .populate('news')
       .lean<Bookmark[] | null>()
       .exec();
