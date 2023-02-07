@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
-import { ToAllNotificationType } from '../../../../services/notificationService';
-import NotificationService from '../../../../services/notificationService';
+import { ToAllNotificationType } from '../../../../services/FCMNotification.service';
+import NotificationService from '../../../../services/FCMNotification.service';
 import NewsRepo from '../../../../database/repositories/NewsRepo';
 import UserRepo from '../../../../database/repositories/UserRepo';
 import ApiResponse from '../../../../utils/api-response';

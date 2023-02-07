@@ -7,7 +7,7 @@ import path from 'path';
 
 import './services/facebookPassport.service';
 
-import NotificationService from './services/notificationService';
+import NotificationService from './services/FCMNotification.service';
 
 // API V1 route
 import RouteV1 from './routes/v1';
