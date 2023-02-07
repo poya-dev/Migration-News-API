@@ -117,22 +117,6 @@ router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
   return ApiResponse.successResponse(res, 200, rec);
 });
 
-router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, email } = req.user as User;
-  const rec = await NewsRepo.findById(new Types.ObjectId(id));
-  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
-  if (req.body.title) rec.title = req.body.title;
-  if (req.body.content) rec.content = req.body.content;
-  if (req.body.imageUrl) rec.imageUrl = req.body.imageUrl;
-  if (req.body.language) rec.language = req.body.language;
-  if (req.body.category) rec.category = req.body.category;
-  if (req.body.channel) rec.channel = req.body.channel;
-  rec.updatedBy = { name: name, email: email };
-  const updateRec = await NewsRepo.update(rec);
-  return ApiResponse.successResponse(res, 200, updateRec);
-});
-
 router.delete('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
