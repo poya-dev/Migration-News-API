@@ -44,11 +44,18 @@ export default class ConsultationRepo {
   public static async addResponse(
     id: Types.ObjectId,
     responseMessage: string
-  ): Promise<any> {
+  ): Promise<Consulting> {
     const now = new Date();
-    return ConsultingModel.findByIdAndUpdate(id, {
-      $set: { 'response.message': responseMessage, 'response.createdAt': now },
-    })
+    return ConsultingModel.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          'response.message': responseMessage,
+          'response.createdAt': now,
+        },
+      },
+      { new: true }
+    )
       .lean<Consulting>()
       .exec();
   }
