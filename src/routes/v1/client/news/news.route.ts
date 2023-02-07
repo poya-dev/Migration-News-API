@@ -45,10 +45,16 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
+  const user = req.user as User;
   const { id } = req.params;
-  const rec = await NewsRepo.findAndUpdateViewCount(new Types.ObjectId(id));
+  const rec = await NewsRepo.findAndUpdateViewCount(
+    new Types.ObjectId(user._id),
+    new Types.ObjectId(id)
+  );
+  if (rec.length > 0) {
+    return ApiResponse.successResponse(res, 200, rec);
+  }
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
-  return ApiResponse.successResponse(res, 200, rec);
 });
 
 export default router;
