@@ -24,4 +24,8 @@ export const facebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || '';
 export const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
 export const googleSecretId = process.env.GOOGLE_SECRET_ID || '';
 
+export const fcmProjectId = process.env.FCM_PROJECT_ID;
+export const fcmClientEmail = process.env.FCM_CLiENT_EMAIL;
+export const fcmPrivateKey = process.env.FCM_PRIVATE_KEY;
+
 export const corsUrl = process.env.CORS_URL;
