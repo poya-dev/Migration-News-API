@@ -1,7 +1,10 @@
 import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
+import { ToAllNotificationType } from '../../../../services/notificationService';
+import NotificationService from '../../../../services/notificationService';
 import NewsRepo from '../../../../database/repositories/NewsRepo';
+import UserRepo from '../../../../database/repositories/UserRepo';
 import ApiResponse from '../../../../utils/api-response';
 import News from '../../../../types/news.type';
 import User from '../../../../types/user.type';
@@ -74,11 +77,36 @@ router.put('/id/:id/submitted', async (req: Request, res: Response) => {
 
 router.put('/id/:id/published', async (req: Request, res: Response) => {
   const { id } = req.params;
+  const sendNotification = req.query.sendNotification as string;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetPublished(new Types.ObjectId(id));
   socket.getIO().emit('newPost', 'New post created');
-  return ApiResponse.successResponse(res, 200, rec);
+  ApiResponse.successResponse(res, 200, rec);
+  if (sendNotification.includes('true')) {
+    const deviceTokens = await UserRepo.findAllDeviceToken();
+    let batchTokens: string[] = [];
+    if (deviceTokens && deviceTokens.length > 0) {
+      for (let i = 0; i < deviceTokens.length; i += 100) {
+        batchTokens = [...deviceTokens.slice(i, (i += 100))];
+        const notification = {
+          tokens: batchTokens,
+          id: rec._id,
+          title: rec.title,
+          body: rec.content,
+          imageUrl: rec.imageUrl,
+          type: 'News',
+        } as ToAllNotificationType;
+        try {
+          await NotificationService.sendToMultiDevice(notification);
+          console.log('*** Notification sent successfully ***');
+        } catch (e) {
+          console.log('** Unfortunately notification Failed to send **', e);
+          break;
+        }
+      }
+    }
+  }
 });
 
 router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
