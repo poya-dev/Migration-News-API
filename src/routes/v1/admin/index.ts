@@ -1,5 +1,6 @@
 import express from 'express';
 
+import dashboardRoute from './dashboard/dashboard.route';
 import userRoute from './user/user.route';
 import languageRoute from './language/language.route';
 import newsCategoryRoute from './news/newsCategory.route';
@@ -9,6 +10,7 @@ import consultingRoute from './consulting/consulting.route';
 
 const router = express.Router();
 
+router.use('/dashboard', dashboardRoute);
 router.use('/users', userRoute);
 router.use('/language', languageRoute);
 router.use('/news-category', newsCategoryRoute);
