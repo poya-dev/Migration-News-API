@@ -62,20 +62,14 @@ export default class NewsRepo {
     return NewsModel.findById(id).lean<News | null>().exec();
   }
 
+  public static async findByTitle(title: string): Promise<News | null> {
+    return NewsModel.findOne({ title: title }).lean<News | null>().exec();
+  }
+
   public static async actionSetDraft(id: Types.ObjectId): Promise<any> {
     return NewsModel.findByIdAndUpdate(
       id,
       { $set: { status: 'Draft' } },
-      { new: true }
-    )
-      .lean<any>()
-      .exec();
-  }
-
-  public static async actionSetSubmitted(id: Types.ObjectId): Promise<any> {
-    return NewsModel.findByIdAndUpdate(
-      id,
-      { $set: { status: 'Submitted' } },
       { new: true }
     )
       .lean<any>()
@@ -142,10 +136,6 @@ export default class NewsRepo {
       { $match: { _id: recId } },
       { $limit: 1 },
     ]);
-  }
-
-  public static async findByTitle(title: string): Promise<News | null> {
-    return NewsModel.findOne({ title: title }).lean<News | null>().exec();
   }
 
   public static async update(news: News): Promise<any> {
