@@ -1,7 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 
 import News from '../../types/news.type';
-const NEWS_STATUS = ['Draft', 'Submitted', 'Published', 'Inactivated'];
+
+const NEWS_STATUS = ['Draft', 'Published', 'Deactivated'];
 
 export const schema = new Schema<News>(
   {
