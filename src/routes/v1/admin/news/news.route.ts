@@ -33,7 +33,9 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsRepo.findAll();
-  return ApiResponse.successResponse(res, 200, recs);
+  setTimeout(() => {
+    return ApiResponse.successResponse(res, 200, recs);
+  }, 4000);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
@@ -64,14 +66,6 @@ router.put('/id/:id/draft', async (req: Request, res: Response) => {
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetDraft(new Types.ObjectId(id));
-  return ApiResponse.successResponse(res, 200, rec);
-});
-
-router.put('/id/:id/submitted', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const rec = await NewsRepo.findById(new Types.ObjectId(id));
-  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
-  await NewsRepo.actionSetSubmitted(new Types.ObjectId(id));
   return ApiResponse.successResponse(res, 200, rec);
 });
 
