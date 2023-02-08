@@ -23,7 +23,9 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await ChannelRepo.findAll();
-  return ApiResponse.successResponse(res, 200, recs);
+  setTimeout(() => {
+    return ApiResponse.successResponse(res, 200, recs);
+  }, 4000);
 });
 
 router.get('/active', async (req: Request, res: Response) => {

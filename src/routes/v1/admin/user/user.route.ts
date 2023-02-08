@@ -29,7 +29,9 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await UserRepo.findAll();
-  return ApiResponse.successResponse(res, 200, recs);
+  setTimeout(() => {
+    return ApiResponse.successResponse(res, 200, recs);
+  }, 4000);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
