@@ -4,7 +4,12 @@ let io: any;
 
 export default {
   init: (httpServer: any) => {
-    io = new Server(httpServer);
+    io = new Server(httpServer, {
+      cors: {
+        origin: 'http://localhost:3001',
+        methods: ['GET', 'POST'],
+      },
+    });
     return io;
   },
   getIO: () => {
