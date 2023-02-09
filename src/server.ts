@@ -4,6 +4,8 @@ import { db, port } from './config';
 import socket from './socket';
 import httpServer from './app';
 
+let connectedClients = 0;
+
 (async () => {
   mongoose.set({ strictQuery: true });
   mongoose
@@ -15,7 +17,13 @@ import httpServer from './app';
       });
       const io = socket.init(httpServer);
       io.on('connection', (socket: any) => {
-        console.log(`****** Client connected ${socket.id} ******`);
+        connectedClients++;
+        io.emit('clientsCount', connectedClients);
+        socket.on('disconnect', () => {
+          connectedClients--;
+          console.log(`****** Client ${socket.id} disconnected ******`);
+          io.emit('clientsCount', connectedClients);
+        });
       });
     })
     .catch((e) => {
