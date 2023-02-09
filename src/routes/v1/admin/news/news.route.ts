@@ -103,11 +103,11 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
   }
 });
 
-router.put('/id/:id/deactivated', async (req: Request, res: Response) => {
+router.put('/id/:id/archived', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await NewsRepo.findById(new Types.ObjectId(id));
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
-  await NewsRepo.actionSetDeactivated(new Types.ObjectId(id));
+  await NewsRepo.actionSetArchived(new Types.ObjectId(id));
   return ApiResponse.successResponse(res, 200, rec);
 });
 

@@ -86,10 +86,10 @@ export default class NewsRepo {
       .exec();
   }
 
-  public static async actionSetDeactivated(id: Types.ObjectId): Promise<any> {
+  public static async actionSetArchived(id: Types.ObjectId): Promise<any> {
     return NewsModel.findByIdAndUpdate(
       id,
-      { $set: { status: 'Deactivated' } },
+      { $set: { status: 'Archived' } },
       { new: true }
     )
       .lean<any>()
