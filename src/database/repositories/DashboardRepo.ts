@@ -1,4 +1,5 @@
 import NewsCategoryModel from '../models/NewsCategory.model';
+import ConsultingModel from '../models/Consulting.model';
 import LanguageModel from '../models/Language.model';
 import ChannelModel from '../models/Channel.model';
 import NewsModel from '../models/News.model';
@@ -17,6 +18,10 @@ export default class DashboardRepo {
     return NewsCategoryModel.countDocuments().lean<number>().exec();
   }
 
+  public static async countConsulting(): Promise<number> {
+    return ConsultingModel.countDocuments().lean<number>().exec();
+  }
+
   public static async countNews(): Promise<number> {
     return NewsModel.countDocuments().lean<number>().exec();
   }
@@ -26,17 +31,9 @@ export default class DashboardRepo {
   }
 
   public static async recentUsers(): Promise<any[]> {
-    return NewsModel.aggregate([
-      {
-        $group: {
-          _id: {
-            month: { $month: '$lastActive' },
-            activeUser: { $sum: 1 },
-          },
-        },
-      },
-      { $sort: { lastActive: -1 } },
-      { $limit: 12 },
+    return UserModel.aggregate([
+      { $group: { _id: { $month: '$lastActive' }, count: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
     ]);
   }
 }
