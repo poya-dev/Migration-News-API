@@ -18,7 +18,7 @@ router.post(
       _id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      role: 'App user',
     };
     const token = signJwt(payload, { expiresIn: accessTokenExpiresIn });
     return ApiResponse.sendAccessToken(
