@@ -30,7 +30,6 @@ export const schema = new Schema<News>(
     language: {
       type: {
         name: String,
-        code: String,
       },
       required: true,
     },

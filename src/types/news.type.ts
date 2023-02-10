@@ -6,7 +6,6 @@ interface Channel {
 }
 interface Language {
   name: string;
-  code: string;
 }
 interface Category {
   name: string;
