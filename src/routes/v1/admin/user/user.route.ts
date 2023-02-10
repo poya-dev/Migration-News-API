@@ -34,6 +34,14 @@ router.get('/', async (req: Request, res: Response) => {
   }, 4000);
 });
 
+router.get('/clients', async (req: Request, res: Response) => {
+  const recs = await UserRepo.findAllClients();
+  console.log(recs);
+  setTimeout(() => {
+    return ApiResponse.successResponse(res, 200, recs);
+  }, 4000);
+});
+
 router.get('/id/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const rec = await UserRepo.findById(new Types.ObjectId(id));
