@@ -3,7 +3,8 @@ import { Types } from 'mongoose';
 import UserModel from '../models/User.model';
 import User from '../../types/user.type';
 
-const USER_DETAILS = '_id name email role userPictureUrl isVerified lastActive';
+const USER_DETAILS =
+  '_id name email role userPictureUrl authProvider isVerified lastActive createdAt';
 
 export default class UserRepo {
   public static async create(user: User): Promise<User> {
@@ -59,7 +60,17 @@ export default class UserRepo {
   }
 
   public static async findAll(): Promise<User[]> {
-    return UserModel.find().select(USER_DETAILS).lean<User[]>().exec();
+    return UserModel.find({ role: 'Admin' })
+      .select(USER_DETAILS)
+      .lean<User[]>()
+      .exec();
+  }
+
+  public static async findAllClients(): Promise<User[]> {
+    return UserModel.find({ role: 'App user' })
+      .select(USER_DETAILS)
+      .lean<User[]>()
+      .exec();
   }
 
   public static async findDeviceTokenById(
