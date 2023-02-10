@@ -18,13 +18,13 @@ export const schema = new Schema<User>(
     },
     role: {
       type: String,
+      default: 'Admin',
     },
     authProvider: {
       type: {
         id: String,
         name: String,
       },
-      select: false,
     },
     userPictureUrl: {
       type: String,
