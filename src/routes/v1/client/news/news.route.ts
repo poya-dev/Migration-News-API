@@ -57,4 +57,10 @@ router.get('/id/:id', async (req: Request, res: Response) => {
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
 });
 
+router.get('/search', async (req: Request, res: Response) => {
+  const searchTerm = req.query.term as string;
+  const recs = await NewsRepo.search(searchTerm);
+  return ApiResponse.successResponse(res, 200, recs);
+});
+
 export default router;
