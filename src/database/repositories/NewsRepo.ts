@@ -58,6 +58,24 @@ export default class NewsRepo {
     ]);
   }
 
+  public static async search(term: string): Promise<News[] | null> {
+    return NewsModel.aggregate([
+      { $match: { title: { $regex: term, $options: 'i' } } },
+      {
+        $project: {
+          content: 0,
+          channel: 0,
+          language: 0,
+          status: 0,
+          createdBy: 0,
+          updatedBy: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        },
+      },
+    ]);
+  }
+
   public static async findById(id: Types.ObjectId): Promise<News | null> {
     return NewsModel.findById(id).lean<News | null>().exec();
   }
