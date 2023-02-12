@@ -35,7 +35,7 @@ router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsRepo.findAll();
   setTimeout(() => {
     return ApiResponse.successResponse(res, 200, recs);
-  }, 4000);
+  }, 1000);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {

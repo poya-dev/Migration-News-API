@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
 import ConsultingRepo from '../../../../database/repositories/ConsultingRepo';
-import { ToOnNotificationType } from '../../../../services/FCMNotification.service';
+import { ToOneNotificationType } from '../../../../services/FCMNotification.service';
 import NotificationService from '../../../../services/FCMNotification.service';
 import UserRepo from '../../../../database/repositories/UserRepo';
 import ApiResponse from '../../../../utils/api-response';
@@ -22,10 +22,10 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
     new Types.ObjectId(id),
     req.body.responseMessage
   );
+  ApiResponse.successResponse(res, 200, newRec);
   const token = await UserRepo.findDeviceTokenById(
     new Types.ObjectId(rec.createdBy?._id)
   );
-  ApiResponse.successResponse(res, 200, newRec);
   if (token && token?.deviceToken) {
     try {
       const notification = {
@@ -34,7 +34,7 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
         title: 'Update about consulting',
         body: newRec.response?.message,
         type: 'Consulting',
-      } as ToOnNotificationType;
+      } as ToOneNotificationType;
       await NotificationService.sendToOneDevice(notification);
       console.log('*** Notification sent successfully ***');
     } catch (e) {

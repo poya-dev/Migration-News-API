@@ -31,7 +31,7 @@ router.get('/', async (req: Request, res: Response) => {
   const recs = await UserRepo.findAll();
   setTimeout(() => {
     return ApiResponse.successResponse(res, 200, recs);
-  }, 4000);
+  }, 1000);
 });
 
 router.get('/clients', async (req: Request, res: Response) => {
@@ -39,7 +39,7 @@ router.get('/clients', async (req: Request, res: Response) => {
   console.log(recs);
   setTimeout(() => {
     return ApiResponse.successResponse(res, 200, recs);
-  }, 4000);
+  }, 1000);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {

@@ -7,7 +7,7 @@ import { Types } from 'mongoose';
 
 import { fcmProjectId, fcmClientEmail, fcmPrivateKey } from '../config';
 
-export type ToOnNotificationType = {
+export type ToOneNotificationType = {
   token: string;
   id: Types.ObjectId;
   title: string;
@@ -37,7 +37,7 @@ export default class NotificationService {
   }
 
   static async sendToOneDevice(
-    payload: ToOnNotificationType
+    payload: ToOneNotificationType
   ): Promise<MessagingDevicesResponse> {
     const messagePayload = {
       notification: {
