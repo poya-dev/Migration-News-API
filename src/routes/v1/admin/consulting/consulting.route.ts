@@ -6,6 +6,7 @@ import { ToOneNotificationType } from '../../../../services/FCMNotification.serv
 import NotificationService from '../../../../services/FCMNotification.service';
 import UserRepo from '../../../../database/repositories/UserRepo';
 import ApiResponse from '../../../../utils/api-response';
+import socket from '../../../../socket';
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
     new Types.ObjectId(id),
     req.body.responseMessage
   );
+  socket.getIO().emit('consultingResponse', 'Admin responded to your request');
   ApiResponse.successResponse(res, 200, newRec);
   const token = await UserRepo.findDeviceTokenById(
     new Types.ObjectId(rec.createdBy?._id)
