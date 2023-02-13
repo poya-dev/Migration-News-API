@@ -13,17 +13,19 @@ const router = express.Router();
 type QueryParam = {
   lang?: string;
   category?: string;
-  page?: string;
-  limit?: string;
+  page?: number;
+  limit?: number;
 };
 
 router.get('/', async (req: Request, res: Response) => {
   const {
     category,
-    lang = 'en',
-    page = '1',
-    limit = '10',
+    lang = 'fa',
+    page = 1,
+    limit = 10,
   } = req.query as QueryParam;
+  const currentPage = Number(page);
+  const pageLimit = Number(limit);
   const filter = { status: 'Published' };
   const user = { user: (req.user as User)._id };
   const language = await LanguageRepo.findByCode(lang);
@@ -33,15 +35,10 @@ router.get('/', async (req: Request, res: Response) => {
   if (category) categoryRec = await NewsCategoryRepo.findByName(category);
   Object.assign(filter, { 'language.name': language.name });
   categoryRec && Object.assign(filter, { 'category.name': categoryRec.name });
-  const recs = await NewsRepo.findNews(
-    user,
-    filter,
-    parseInt(page),
-    parseInt(limit)
-  );
+  const recs = await NewsRepo.findNews(user, filter, currentPage, pageLimit);
   const count = await NewsModel.countDocuments(filter);
-  const lastPage = Math.ceil(count / parseInt(limit));
-  return ApiResponse.successResponse(res, 200, recs, parseInt(page), lastPage);
+  const lastPage = Math.ceil(count / pageLimit);
+  return ApiResponse.successResponse(res, 200, recs, currentPage, lastPage);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {
