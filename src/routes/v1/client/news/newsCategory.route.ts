@@ -10,7 +10,7 @@ const router = express.Router();
 type QueryParam = { lang?: string };
 
 router.get('/', async (req: Request, res: Response) => {
-  const { lang = 'en' } = req.query as QueryParam;
+  const { lang = 'fa' } = req.query as QueryParam;
   const language = await LanguageRepo.findByCode(lang);
   if (!language)
     return ApiResponse.failureResponse(res, 404, 'Language not found');
