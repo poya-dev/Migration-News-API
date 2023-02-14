@@ -17,6 +17,11 @@ type QueryParam = {
   limit?: number;
 };
 
+type SearchQueryParam = {
+  term?: string;
+  lang?: string;
+};
+
 router.get('/', async (req: Request, res: Response) => {
   const {
     category,
@@ -55,8 +60,17 @@ router.get('/id/:id', async (req: Request, res: Response) => {
 });
 
 router.get('/search', async (req: Request, res: Response) => {
-  const searchTerm = req.query.term as string;
-  const recs = await NewsRepo.search(searchTerm);
+  const { term = '', lang = 'fa' } = req.query as SearchQueryParam;
+  const language = await LanguageRepo.findByCode(lang);
+  if (!language)
+    return ApiResponse.failureResponse(res, 404, 'Language not found');
+  const user = { user: (req.user as User)._id };
+  const filter = {
+    'language.name': language.name,
+    title: { $regex: term, $options: 'i' },
+    status: 'Published',
+  };
+  const recs = await NewsRepo.search(user, filter);
   return ApiResponse.successResponse(res, 200, recs);
 });
 

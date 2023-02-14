@@ -58,9 +58,25 @@ export default class NewsRepo {
     ]);
   }
 
-  public static async search(term: string): Promise<News[] | null> {
+  public static async search(user: any, filter: any): Promise<News[]> {
     return NewsModel.aggregate([
-      { $match: { title: { $regex: term, $options: 'i' } } },
+      {
+        $lookup: {
+          from: 'bookmarks',
+          localField: '_id',
+          foreignField: 'news',
+          pipeline: [{ $match: user }],
+          as: 'bookmarks',
+        },
+      },
+      {
+        $addFields: {
+          isBookmark: {
+            $cond: [{ $eq: [{ $size: '$bookmarks' }, 0] }, false, true],
+          },
+        },
+      },
+      { $match: { $and: [filter] } },
       {
         $project: {
           content: 0,
