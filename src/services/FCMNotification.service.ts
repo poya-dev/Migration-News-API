@@ -9,11 +9,8 @@ import { fcmProjectId, fcmClientEmail, fcmPrivateKey } from '../config';
 
 export type ToOneNotificationType = {
   token: string;
-  id: Types.ObjectId;
   title: string;
   body: string;
-  imageUrl?: string;
-  type?: string;
 };
 
 export type ToAllNotificationType = {
@@ -22,7 +19,6 @@ export type ToAllNotificationType = {
   title: string;
   body: string;
   imageUrl: string;
-  type?: string;
 };
 
 export default class NotificationService {
@@ -44,8 +40,8 @@ export default class NotificationService {
         title: payload.title,
         body: payload.body,
       },
-      body: {
-        type: payload.type,
+      data: {
+        type: 'Consulting',
       },
     };
     return admin.messaging().sendToDevice(payload.token, messagePayload);
@@ -54,18 +50,18 @@ export default class NotificationService {
   static async sendToMultiDevice(
     payload: ToAllNotificationType
   ): Promise<BatchResponse> {
-    const notificationContent = {
+    const notificationPayload = {
       tokens: payload.tokens,
       notification: {
         title: payload.title,
         body: payload.body,
         imageUrl: payload.imageUrl,
       },
-      body: {
-        id: payload.id,
-        type: payload.type,
+      data: {
+        id: payload.id.toString(),
+        type: 'News',
       },
     };
-    return admin.messaging().sendMulticast(notificationContent);
+    return admin.messaging().sendMulticast(notificationPayload);
   }
 }
