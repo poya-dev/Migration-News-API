@@ -4,7 +4,7 @@ import UserModel from '../models/User.model';
 import User from '../../types/user.type';
 
 const USER_DETAILS =
-  '_id name email role userPictureUrl authProvider isVerified lastActive createdAt';
+  '_id name email role userPictureUrl authProvider isVerified lastActive deviceToken createdAt';
 
 export default class UserRepo {
   public static async create(user: User): Promise<User> {
@@ -82,8 +82,11 @@ export default class UserRepo {
       .exec();
   }
 
-  public static async findAllDeviceToken(): Promise<any[] | null> {
-    return UserModel.find().select('deviceToken').lean<any[]>().exec();
+  public static async findAllDeviceToken(): Promise<any[]> {
+    return UserModel.find({ deviceToken: { $ne: null } })
+      .select('-_id deviceToken')
+      .lean<any[]>()
+      .exec();
   }
 
   public static async findBookmarks(id: Types.ObjectId): Promise<User | null> {
