@@ -25,10 +25,10 @@ router.post('/device-token', async (req: Request, res: Response) => {
     return ApiResponse.failureResponse(res, 404, 'User does not exist');
   }
   if (req.body.deviceToken) rec.deviceToken = req.body.deviceToken;
-  const newRec = UserRepo.update(req.body.deviceToken);
+  const newRec = await UserRepo.update(rec);
   return ApiResponse.successResponse(
     res,
-    200,
+    201,
     _.pick(newRec, ['_id', 'name', 'email', 'userPictureUrl', 'deviceToken'])
   );
 });
