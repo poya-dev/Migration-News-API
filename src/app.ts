@@ -14,7 +14,7 @@ import RouteV1 from './routes/v1';
 
 const app = express();
 
-const whitelist = ['http://89.116.229.199:3001', '*'];
+const whitelist = ['http://localhost:3001', '*'];
 
 const corsOptions = {
   credentials: true,
