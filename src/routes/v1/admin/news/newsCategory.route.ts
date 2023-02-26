@@ -23,9 +23,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsCategoryRepo.findAll();
-  setTimeout(() => {
-    return ApiResponse.successResponse(res, 200, recs);
-  }, 1000);
+  return ApiResponse.successResponse(res, 200, recs);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {

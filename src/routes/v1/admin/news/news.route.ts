@@ -34,9 +34,7 @@ router.post('/', async (req: Request, res: Response) => {
 router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsRepo.findAll();
   socket.getIO().emit('newPost', 'New post available');
-  setTimeout(() => {
-    return ApiResponse.successResponse(res, 200, recs);
-  }, 1000);
+  return ApiResponse.successResponse(res, 200, recs);
 });
 
 router.get('/id/:id', async (req: Request, res: Response) => {

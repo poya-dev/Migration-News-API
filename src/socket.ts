@@ -6,8 +6,11 @@ export default {
   init: (httpServer: any) => {
     io = new Server(httpServer, {
       cors: {
-        origin: 'http://localhost:3001',
-        methods: ['GET', 'POST'],
+        origin: [
+          'http://localhost:3001',
+          'https://panel.migration-information.com',
+        ],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
       },
     });
     return io;

@@ -56,9 +56,7 @@ router.get('/', async (req: Request, res: Response) => {
     },
     userChart: userActivity,
   };
-  setTimeout(() => {
-    ApiResponse.successResponse(res, 200, dashboardInfo);
-  }, 1000);
+  ApiResponse.successResponse(res, 200, dashboardInfo);
 });
 
 export default router;

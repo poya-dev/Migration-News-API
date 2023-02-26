@@ -14,7 +14,10 @@ import RouteV1 from './routes/v1';
 
 const app = express();
 
-const whitelist = ['http://localhost:3001', '*'];
+const whitelist = [
+  'http://localhost:3001',
+  'https://panel.migration-information.com',
+];
 
 const corsOptions = {
   credentials: true,
