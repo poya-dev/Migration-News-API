@@ -16,6 +16,7 @@ const app = express();
 
 const whitelist = [
   'http://localhost:3001',
+  'http://89.116.229.199:3001',
   'https://panel.migration-information.com',
 ];
 

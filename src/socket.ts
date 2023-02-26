@@ -8,6 +8,7 @@ export default {
       cors: {
         origin: [
           'http://localhost:3001',
+          'http://89.116.229.199:3001',
           'https://panel.migration-information.com',
         ],
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
