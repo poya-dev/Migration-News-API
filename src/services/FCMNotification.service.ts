@@ -59,7 +59,7 @@ export default class NotificationService {
       },
       data: {
         id: payload.id.toString(),
-        type: 'News',
+        type: 'Post',
       },
     };
     return admin.messaging().sendMulticast(notificationPayload);

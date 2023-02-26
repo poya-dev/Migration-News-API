@@ -74,7 +74,7 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
   if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found.');
   await NewsRepo.actionSetPublished(new Types.ObjectId(id));
   ApiResponse.successResponse(res, 200, rec);
-  socket.getIO().emit('newPost', 'New post created');
+  socket.getIO().emit('Post', 'New post created');
   const tokensResult = await UserRepo.findAllDeviceToken();
   const deviceTokens: string[] = [];
   if (tokensResult.length > 0) {
