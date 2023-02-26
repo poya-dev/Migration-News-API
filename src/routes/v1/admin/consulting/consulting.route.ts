@@ -32,7 +32,7 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
     try {
       const notification = {
         token: token.deviceToken,
-        title: 'Update about consulting',
+        title: 'مشاوره تلفونی',
         body: newRec.response?.message,
       } as ToOneNotificationType;
       await NotificationService.sendToOneDevice(notification);
