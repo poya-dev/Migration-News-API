@@ -38,7 +38,7 @@ router.put('/add-response/:id', async (req: Request, res: Response) => {
       await NotificationService.sendToOneDevice(notification);
       console.log('*** Notification sent successfully ***');
     } catch (e) {
-      console.log('** Unfortunately notification Failed to send **', e);
+      console.log('** Unfortunately notification Failed to send **');
     }
   }
 });
