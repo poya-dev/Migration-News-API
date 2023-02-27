@@ -33,7 +33,6 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const recs = await NewsRepo.findAll();
-  socket.getIO().emit('newPost', 'New post available');
   return ApiResponse.successResponse(res, 200, recs);
 });
 
@@ -84,20 +83,19 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
   }
   let batchTokens: string[] = [];
   if (deviceTokens && deviceTokens.length > 0) {
-    for (let i = 0; i < deviceTokens.length; i += 500) {
-      batchTokens = [...deviceTokens.slice(i, (i += 500))];
+    for (let i = 0; i < deviceTokens.length; i += 499) {
+      batchTokens = [...deviceTokens.slice(i, (i += 499))];
       const notification = {
         tokens: batchTokens,
         id: rec._id,
         title: rec.title,
         body: rec.content,
-        imageUrl: rec.imageUrl,
       } as ToAllNotificationType;
       try {
         await NotificationService.sendToMultiDevice(notification);
         console.log('*** Notification sent successfully ***');
       } catch (e) {
-        console.log('** Unfortunately notification Failed to send **', e);
+        console.log('** Unfortunately notification Failed to send **');
         break;
       }
     }
