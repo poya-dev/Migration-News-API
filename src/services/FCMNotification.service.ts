@@ -51,7 +51,6 @@ export default class NotificationService {
   static async sendToMultiDevice(
     payload: ToAllNotificationType
   ): Promise<BatchResponse> {
-    console.log(payload);
     const notificationPayload = {
       tokens: payload.tokens,
       notification: {
