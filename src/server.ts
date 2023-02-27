@@ -21,7 +21,6 @@ let connectedClients = 0;
         io.emit('clientsCount', connectedClients);
         socket.on('disconnect', () => {
           connectedClients--;
-          console.log(`****** Client ${socket.id} disconnected ******`);
           io.emit('clientsCount', connectedClients);
         });
       });
