@@ -1,9 +1,11 @@
 import admin from 'firebase-admin';
+import { Types } from 'mongoose';
 import {
   BatchResponse,
   MessagingDevicesResponse,
+  MulticastMessage,
+  MessagingPayload,
 } from 'firebase-admin/lib/messaging/messaging-api';
-import { Types } from 'mongoose';
 
 import { fcmProjectId, fcmClientEmail, fcmPrivateKey } from '../config';
 
@@ -18,7 +20,6 @@ export type ToAllNotificationType = {
   id: Types.ObjectId;
   title: string;
   body: string;
-  imageUrl: string;
 };
 
 export default class NotificationService {
@@ -43,25 +44,25 @@ export default class NotificationService {
       data: {
         type: 'Consulting',
       },
-    };
+    } as MessagingPayload;
     return admin.messaging().sendToDevice(payload.token, messagePayload);
   }
 
   static async sendToMultiDevice(
     payload: ToAllNotificationType
   ): Promise<BatchResponse> {
+    console.log(payload);
     const notificationPayload = {
       tokens: payload.tokens,
       notification: {
         title: payload.title,
         body: payload.body,
-        imageUrl: payload.imageUrl,
       },
       data: {
         id: payload.id.toString(),
         type: 'Post',
       },
-    };
+    } as MulticastMessage;
     return admin.messaging().sendMulticast(notificationPayload);
   }
 }
