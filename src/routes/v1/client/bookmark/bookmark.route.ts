@@ -9,7 +9,8 @@ import User from '../../../../types/user.type';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const recs = await BookmarkRepo.findAll();
+  const { _id } = req.user as User;
+  const recs = await BookmarkRepo.findUserBookmarks(new Types.ObjectId(_id));
   return ApiResponse.successResponse(res, 200, recs);
 });
 

@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 import BookmarkModel from '../models/Bookmark.model';
 import Bookmark from '../../types/bookmark.type';
 
@@ -11,10 +13,12 @@ export default class BookmarkRepo {
     return BookmarkModel.findOneAndDelete(filter).lean<Bookmark>().exec();
   }
 
-  public static async findAll(): Promise<Bookmark[] | null> {
-    return BookmarkModel.find()
+  public static async findUserBookmarks(
+    userId: Types.ObjectId
+  ): Promise<Bookmark[]> {
+    return BookmarkModel.find({ user: userId })
       .populate('news')
-      .lean<Bookmark[] | null>()
+      .lean<Bookmark[]>()
       .exec();
   }
 
