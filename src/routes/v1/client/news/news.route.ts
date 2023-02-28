@@ -53,10 +53,8 @@ router.get('/id/:id', async (req: Request, res: Response) => {
     new Types.ObjectId(user._id),
     new Types.ObjectId(id)
   );
-  if (rec.length > 0) {
-    return ApiResponse.successResponse(res, 200, rec);
-  }
-  if (!rec) return ApiResponse.failureResponse(res, 404, 'Record not found');
+  if (rec.length > 0) return ApiResponse.successResponse(res, 200, rec);
+  return ApiResponse.failureResponse(res, 404, 'Record not found');
 });
 
 router.get('/search', async (req: Request, res: Response) => {

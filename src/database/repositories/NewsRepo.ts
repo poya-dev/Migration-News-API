@@ -167,6 +167,7 @@ export default class NewsRepo {
           },
         },
       },
+      { $project: { bookmarks: 0 } },
       { $match: { _id: recId } },
       { $limit: 1 },
     ]);
