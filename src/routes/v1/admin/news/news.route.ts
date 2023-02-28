@@ -88,8 +88,8 @@ router.put('/id/:id/published', async (req: Request, res: Response) => {
       const notification = {
         tokens: batchTokens,
         id: rec._id,
-        title: rec.title,
-        body: rec.content,
+        title: rec.category.name,
+        body: rec.title,
       } as ToAllNotificationType;
       try {
         await NotificationService.sendToMultiDevice(notification);
